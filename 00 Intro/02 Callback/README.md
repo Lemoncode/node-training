@@ -1,10 +1,13 @@
 # 02 Callback
 
-In this sample we are going to .
+In this sample we are going to learn how to keep clean our code using callbacks.
 
 Summary steps:
 
--
+- Remove previous sample code.
+- Create `oneWordToUpper` method.
+- Use `oneWordToUpper` method.
+- Use callbacks to keep clean our code.
 
 # Steps to build it
 
@@ -14,13 +17,97 @@ Summary steps:
 
 # Steps
 
--
+- Remove previous sample code.
 
-- Run app server as we show on _00 Hello_ or press `F5` key.
+### ./index.js
 
-- Open `http://localhost/3000` in your browser:
+```diff
+- const http = require('http');
 
-![open server in browser](../../99%20Resources/00%20Intro/01%20Basic%20Server/open%20server%20in%20browser.png)
+- const app = http.createServer((req, res) => {
+-   res.writeHead(200, { 'Content-Type': 'text/plain' });
+-   res.end('Hello World\n');
+- });
+
+- const port = 3000;
+- app.listen(port);
+
+- console.log(`Server running on port ${port}`);
+
+```
+
+- Create `oneWordToUpper`:
+
+### ./index.js
+
+```diff
++ const maxTime = 2000;
+
++ const oneWordToUpper = (value) => {
++   const time = Math.floor((Math.random() * maxTime) + 1);
++   let error = null;
++   let result = null;
++   setTimeout(() => {
++     const splitted = value.split(' ');
++     console.log(splitted);
++     if (splitted.length > 1) {
++       error = { message: 'More than one word!' };
++     } else {
++       result = value.toUpperCase();
++       error = null;
++     }
+
++     if (!!error) {
++       console.log(`Error: ${error.message}`);
++     } else {
++       console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
++     }
++   }, time);
++ }
+
+```
+
+- Use `oneWordToUpper` method:
+
+### ./index.js
+
+```diff
+const maxTime = 2000;
+
+const oneWordToUpper = (value) => {
+  const time = Math.floor((Math.random() * maxTime) + 1);
+  let error = null;
+  let result = null;
+  setTimeout(() => {
+    const splitted = value.split(' ');
+    console.log(splitted);
+    if (splitted.length > 1) {
+      error = { message: 'More than one word!' };
+    } else {
+      result = value.toUpperCase();
+      error = null;
+    }
+
+    if (!!error) {
+      console.log(`Error: ${error.message}`);
+    } else {
+      console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
+    }
+  }, time);
+}
+
++ const values = ['jaime', 'nasdan', 'daniel sanchez', 'jaime salas'];
+
++ values.forEach(
++   (value) => oneWordToUpper(value)
++ );
+
+```
+
+- Press `F5` key to run app:
+
+![run app without callbacks](../../99%20Resources/00%20Intro/02%20Callback/run%20app%20without%20callbacks.png)
+
 
 # About Lemoncode
 
