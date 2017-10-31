@@ -1,10 +1,13 @@
 # 01 Basic server
 
-In this sample we are going ...
+In this sample we are going to create a simple NodeJS server that listen on port `3000`
 
 Summary steps:
 
-- 
+- Rename `hello.js` to `index.js`.
+- Require `http` module.
+- Create app server.
+- Listen on port `3000`.
 
 # Steps to build it
 
@@ -14,7 +17,47 @@ Summary steps:
 
 # Steps
 
-- 
+- Rename `hello.js` to `index.js` and remove all code:
+
+### ./index.js
+
+```diff
+- const hello = 'Hello World!!';
+
+- setTimeout(() => console.log(hello), 1000);
+
+```
+
+- Require `http` module:
+
+### ./index.js
+
+```diff
++ const http = require('http');
+
+```
+
+- Create app server:
+
+### ./index.js
+
+```diff
+const http = require('http');
+
++ 
+
+```
+
+- Listen on port `3000`:
+
+### ./index.js
+
+```diff
+const http = require('http');
+
++ 
+
+```
 
 # About Lemoncode
 
