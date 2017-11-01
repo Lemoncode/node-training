@@ -5,6 +5,9 @@ In this sample we are going to learn how to create a custom module and export it
 Summary steps:
 
 - Remove previous sample code.
+- Create `mathfun.js` file.
+- Some `export` samples.
+- Use `mathfun` in `index.js` file.
 
 # Steps to build it
 
@@ -14,10 +17,7 @@ Summary steps:
 
 # Steps
 
-- Remove previous sample code.
-- Create `mathfun.js` file.
-- Some `export` samples.
-- Use `mathfun` in `index.js` file.
+- Remove previous sample code:
 
 ### ./index.js
 
