@@ -1,12 +1,13 @@
-const os = require('os');
+const mathfun = require('./mathfun');
 
-console.log(`Host: ${os.hostname()}`);
-console.log(`15 min. load avarage ${os.loadavg()}`);
+const processResult = (err, result, time) => {
+  if (err) {
+    console.log(`ERROR: ${err.message}`);
+  } else {
+    console.log(`The result is: ${result} (${time} ms)`);
+  }
+};
 
-const toMb = (memory) => (
-  Math.round((memory / 1024 / 1024) * 100) / 100
+[5, 25, 4, 8, 64].forEach(
+  (value) => mathfun.intSqrt(value, processResult)
 );
-
-console.log(`
-  ${toMb(os.freemem())} of ${toMb(os.totalmem())} Mb free
-`);

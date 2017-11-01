@@ -1,6 +1,6 @@
 # 01 File module
 
-In this sample we are going to
+In this sample we are going to learn how to create a custom module and export it to be used in other file using `CommonJS modules`.
 
 Summary steps:
 
@@ -14,7 +14,10 @@ Summary steps:
 
 # Steps
 
-- Remove previous sample code:
+- Remove previous sample code.
+- Create `mathfun.js` file.
+- Some `export` samples.
+- Use `mathfun` in `index.js` file.
 
 ### ./index.js
 
@@ -34,7 +37,146 @@ Summary steps:
 
 ```
 
--
+- Create `mathfun.js` file:
+
+### ./mathfun.js
+
+```javascript
+const maxTime = 2000;
+
+const intSqrt = (value, callback) => {
+  const waitTime = Math.floor(Math.random() * (maxTime + 1));
+  const result = Math.sqrt(value);
+  (!Number.isInteger(result)) ?
+    callback(new Error('Not integer square')) :
+    callback(null, result, waitTime);
+};
+
+```
+
+- How to export this method in Node.js? Using `CommonJS`. It's a simple module loading system implemented by Node. In Node.js, files and modules are in one-to-one correspondence (each file is treated as a separate module):
+
+### ./mathfun.js
+
+```diff
+const maxTime = 2000;
+
+const intSqrt = (value, callback) => {
+  const waitTime = Math.floor(Math.random() * (maxTime + 1));
+  const result = Math.sqrt(value);
+  (!Number.isInteger(result)) ?
+    callback(new Error('Not integer square')) :
+    callback(null, result, waitTime);
+};
+
++ module.exports.intSqrt = intSqrt;
+
+```
+
+- We could `export` everything, as `primitive types`, `object`, `functions`, etc:
+
+### ./mathfun.js
+
+```diff
+const maxTime = 2000;
+
+const intSqrt = (value, callback) => {
+  const waitTime = Math.floor(Math.random() * (maxTime + 1));
+  const result = Math.sqrt(value);
+  (!Number.isInteger(result)) ?
+    callback(new Error('Not integer square')) :
+    callback(null, result, waitTime);
+};
+
+module.exports.intSqrt = intSqrt;
++ module.exports.foo = 'bar';
+
+```
+
+- Even, we could export as:
+
+### ./mathfun.js
+
+```diff
+const maxTime = 2000;
+
+const intSqrt = (value, callback) => {
+  const waitTime = Math.floor(Math.random() * (maxTime + 1));
+  const result = Math.sqrt(value);
+  (!Number.isInteger(result)) ?
+    callback(new Error('Not integer square')) :
+    callback(null, result, waitTime);
+};
+
+- module.exports.intSqrt = intSqrt;
+- module.exports.foo = 'bar';
++ module.exports = {
++   intSqrt,
++   foo: 'bar',
++ }
+
+```
+
+- Now we could keep file as before and use it in `index.js` file:
+
+### ./mathfun.js
+
+```diff
+const maxTime = 2000;
+
+const intSqrt = (value, callback) => {
+  const waitTime = Math.floor(Math.random() * (maxTime + 1));
+  const result = Math.sqrt(value);
+  (!Number.isInteger(result)) ?
+    callback(new Error('Not integer square')) :
+    callback(null, result, waitTime);
+};
+
+- module.exports = {
+-   intSqrt,
+-   foo: 'bar',
+- }
++ module.exports.intSqrt = intSqrt;
+
+```
+
+- Import `mathfun` file:
+
+### ./index.js
+
+```diff
++ const mathfun = require('./mathfun');
+
+```
+
+- And use it:
+
+### ./index.js
+
+```diff
+const mathfun = require('./mathfun');
+
++ const processResult = (err, result, time) => {
++   if (err) {
++     console.log(`ERROR: ${err.message}`);
++   } else {
++     console.log(`The result is: ${result} (${time} ms)`);
++   }
++ };
+
++ [5, 25, 4, 8, 64].forEach(
++   (value) => mathfun.intSqrt(value, processResult)
++ );
+
+```
+
+- Press `F5` key to run app:
+
+![run app](../../99%20Resources/01%20Modules/01%20File%20module/run%20app.png)
+
+- We could use VS Code to debugg our app:
+
+![debugging](../../99%20Resources/01%20Modules/01%20File%20module/debugging.gif)
 
 # About Lemoncode
 
