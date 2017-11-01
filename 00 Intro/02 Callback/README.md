@@ -63,7 +63,7 @@ Summary steps:
 +       console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
 +     }
 +   }, time);
-+ }
++ };
 
 ```
 
@@ -94,7 +94,7 @@ const oneWordToUpper = (value) => {
       console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
     }
   }, time);
-}
+};
 
 + const values = ['jaime', 'nasdan', 'daniel sanchez', 'jaime salas'];
 
@@ -108,6 +108,103 @@ const oneWordToUpper = (value) => {
 
 ![run app without callbacks](../../99%20Resources/00%20Intro/02%20Callback/run%20app%20without%20callbacks.png)
 
+- Use callbacks to keep clean our code. First, we could extract result handling and pass it as parameter:
+
+### ./index.js
+
+```diff
+const maxTime = 2000;
+
+- const oneWordToUpper = (value) => {
++ const oneWordToUpper = (value, callback) => {
+  const time = Math.floor((Math.random() * maxTime) + 1);
+  let error = null;
+  let result = null;
+  setTimeout(() => {
+    const splitted = value.split(' ');
+    console.log(splitted);
+    if (splitted.length > 1) {
+      error = { message: 'More than one word!' };
+    } else {
+      result = value.toUpperCase();
+      error = null;
+    }
+
+-   if (!!error) {
+-     console.log(`Error: ${error.message}`);
+-   } else {
+-     console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
+-   }
++   callback(error, result, time);
+  }, time);
+};
+
+const values = ['jaime', 'nasdan', 'daniel sanchez', 'jaime salas'];
+
+values.forEach(
+- (value) => oneWordToUpper(value)
++ (value) => oneWordToUpper(value, (error, result, time) => {
++   if (!!error) {
++     console.log(`Error: ${error.message}`);
++   } else {
++     console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
++   }
++ })
+);
+
+```
+
+- Passing result handler as callback, we could re-use `oneWordToUpper` method with other `behaviour`. As one step over, we could extract callback into a function:
+
+### ./index.js
+
+```diff
+const maxTime = 2000;
+
+const oneWordToUpper = (value, callback) => {
+  const time = Math.floor((Math.random() * maxTime) + 1);
+  let error = null;
+  let result = null;
+  setTimeout(() => {
+    const splitted = value.split(' ');
+    console.log(splitted);
+    if (splitted.length > 1) {
+      error = { message: 'More than one word!' };
+    } else {
+      result = value.toUpperCase();
+      error = null;
+    }
+
+    callback(error, result, time);
+  }, time);
+};
+
++ const handleResults = (error, result, time) => {
++   if (!!error) {
++     console.log(`Error: ${error.message}`);
++   } else {
++     console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
++   }
++ };
+
+const values = ['jaime', 'nasdan', 'daniel sanchez', 'jaime salas'];
+
+values.forEach(
+- (value) => oneWordToUpper(value, (error, result, time) => {
+-   if (!!error) {
+-     console.log(`Error: ${error.message}`);
+-   } else {
+-     console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
+-   }
+- })
++ (value) => oneWordToUpper(value, handleResults)
+);
+
+```
+
+- Press `F5` key to run app:
+
+![run app with callbacks](../../99%20Resources/00%20Intro/02%20Callback/run%20app%20with%20callbacks.png)
 
 # About Lemoncode
 
