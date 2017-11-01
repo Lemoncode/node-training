@@ -1,6 +1,6 @@
 # 00 Built in
 
-In this sample we are going to learn how to require Node `built-in` modules. As example we are going to use `os` module and learn to free memory.
+In this sample we are going to learn how to require Node `built-in` modules. As example we are going to use `os` module.
 
 Summary steps:
 
