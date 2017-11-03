@@ -7,15 +7,19 @@ Each sample contains a `README.md` file that indicates the purpose of the sample
 
 ## 00 Intro
 
-### 00 Hello
+### 00 Installing Node and IDE
+
+In this sample we are going to .
+
+### 01 Hello
 
 In this sample we are going to create a `hello.js` file with `console.log` message and a VS Code `launch.json` file to run our first Node server.
 
-### 01 Basic Server
+### 02 Basic Server
 
 In this sample we are going to create a simple NodeJS server that listen on port `3000`.
 
-### 02 Callback
+### 03 Callback
 
 In this sample we are going to learn how to keep clean our code using callbacks.
 
