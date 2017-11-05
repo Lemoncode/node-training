@@ -1,13 +1,12 @@
-const mathfun = require('./mathfun');
+const request = require('request');
 
-const processResult = (err, result, time) => {
-  if (err) {
-    console.log(`ERROR: ${err.message}`);
-  } else {
-    console.log(`The result is: ${result} (${time} ms)`);
+const responseHandler = (err, response, body) => {
+  if (!err && response.statusCode === 200) {
+    console.log(body);
   }
 };
 
-[5, 25, 4, 8, 64].forEach(
-  (value) => mathfun.intSqrt(value, processResult)
+request(
+  'http://www.leanmood.com',
+  responseHandler
 );

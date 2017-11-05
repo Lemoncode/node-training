@@ -1,0 +1,22 @@
+{
+  "name": "npm-modules-sample",
+  "version": "1.0.0",
+  "description": "How to create and configure a package.json file, install a npm third library and use it",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemoncode/node-training.git"
+  },
+  "author": "Lemoncode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lemoncode/node-training/issues"
+  },
+  "homepage": "https://github.com/Lemoncode/node-training#readme",
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}

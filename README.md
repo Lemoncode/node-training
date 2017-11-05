@@ -31,7 +31,7 @@ In this sample we are going to learn how to create a custom module and export it
 
 ### 02 NPM modules
 
-In this sample we are going to ...
+In this sample we are going to learn how to create and configure a `package.json` file, install a npm third library and use it.
 
 ## 02 Events
 
