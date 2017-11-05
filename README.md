@@ -27,6 +27,10 @@ In this sample we are going to learn how to keep clean our code using callbacks.
 
 In this sample we are going to use the global object `process` and playing with the `exit` and `uncaughtException` events.
 
+### 05 Buffer
+
+In this sample we are going to learn about `Buffer`. We will create three samples managing buffers.
+
 ## 01 Modules
 
 ### 00 Built in
