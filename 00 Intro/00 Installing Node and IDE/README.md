@@ -86,6 +86,99 @@ node -v
 
 ![use node 6](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/use%20node%206.png)
 
+- Install [VS Code](https://code.visualstudio.com/):
+
+![download vs code](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/download%20vs%20code.png)
+
+- This IDE has too many features by default but If you want, you could install more plugins. Some interesting plugins are `EditorConfig for VS Code`, `ESLint` and `TSLint`:
+
+![code plugins](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/code%20plugins.png)
+
+- `EditorConfig` helps developers define and maintain consistent coding styles between different editors and IDEs.
+
+- To configure it, we have to place a `.editorconfig` file in `project root path`:
+
+- Top-most EditorConfig file:
+
+### ./.editorconfig
+
+```diff
++ root = true
+
+```
+
+- Apply to all files in project:
+
+### ./.editorconfig
+
+```diff
+root = true
+
++ [*]
+
+```
+
+- Indent style 2 and spaces:
+
+### ./.editorconfig
+
+```diff
+root = true
+
+[*]
++ indent_size = 2
++ indent_style = space
+
+```
+
+- Insert always end of line and windows style:
+
+### ./.editorconfig
+
+```diff
+root = true
+
+[*]
+indent_size = 2
+indent_style = space
++ insert_final_newline = true
++ end_of_line = crlf
+
+```
+
+- Use `UTF-8` as encoding:
+
+### ./.editorconfig
+
+```diff
+root = true
+
+[*]
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+end_of_line = crlf
++ charset = utf-8
+
+```
+
+- Remove any whitespace char preceding new line:
+
+### ./.editorconfig
+
+```diff
+root = true
+
+[*]
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+end_of_line = crlf
+charset = utf-8
++ trim_trailing_whitespace = true
+
+```
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
