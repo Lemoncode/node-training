@@ -7,7 +7,8 @@ Summary steps:
 - Create a zero-filled buffer.
 - Create an uninitialized buffer.
 - Create a buffer from string.
-- Using `string_decoder`.
+- Using `String Decoder`.
+- Using `fs` to and `Buffer.slice`.
 
 # Steps to build it
 
@@ -135,6 +136,113 @@ const string = 'touché';
 - Press `F5` key to run app:
 
 ![buffer from](../../99%20Resources/00%20Intro/05%20Buffer/buffer%20from.png)
+
+- When converting streams of binary data, we should use the [`string_decoder`](https://nodejs.org/docs/latest-v6.x/api/string_decoder.html) module, because it handles multi-byte characters much better, specially incomplete multibyte characters. The string decoder preserves the incomplete encoded characters until it's complete and then returns it. The default toString operation on a buffer does not do that.
+
+- As sample, we are going to create a new file named `stringDecoder.js`:
+
+### ./stringDecoder.js
+
+```javascript
+const StringDecoder = require('string_decoder').StringDecoder;
+const decoder = new StringDecoder('utf8');
+
+```
+
+- The `€` symbol typed in hexadecimal `UTF-8` is `[0xE2, 0x82, 0xAC]`:
+
+### ./stringDecoder.js
+
+```diff
+const StringDecoder = require('string_decoder').StringDecoder;
+const decoder = new StringDecoder('utf8');
+
++ const buffer = Buffer.from([0xE2, 0x82, 0xAC]);
++ console.log(buffer.toString());
+
+```
+
+- Press `F5` key to run app:
+
+![euro symbol](../../99%20Resources/00%20Intro/05%20Buffer/euro%20symbol.png)
+
+- Now, imagine that binary input is coming from somewhere and we want to encode it into UTF-8:
+
+### ./stringDecoder.js
+
+```diff
+const StringDecoder = require('string_decoder').StringDecoder;
+const decoder = new StringDecoder('utf8');
+
+- const buffer = Buffer.from([0xE2, 0x82, 0xAC]);
+- console.log(buffer.toString());
++ process.stdin.on('readable', () => {
++   const chunk = process.stdin.read();
++   if (chunk) {
++     const buffer = Buffer.from([chunk]);
++     console.log('With .toString():', buffer.toString());
++     console.log('With StringDecoder:', decoder.write(buffer));
++   }
++ });
+
+```
+
+- Run app using `node <filename>` because debugger console does not work well with input data:
+
+```bash
+node stringDecoder
+```
+
+![stringDecoder](../../99%20Resources/00%20Intro/05%20Buffer/stringDecoder.png)
+
+- These are held in the buffer until the next call to stringDecoder.write() or until stringDecoder.end() is called.
+
+- Now, we want to process a file using [`File system`](https://nodejs.org/docs/latest-v6.x/api/fs.html) module and convert the last three bytes of the file according to the map:
+
+### ./bufferSlice.js
+
+```javascript
+const fs = require('fs');
+
+const conversionMap = {
+  '88': '65',
+  '89': '66',
+  '90': '67',
+};
+
+```
+
+- Now, we are going to read `buffSlice.js` file and get the tag `XYZ` and use the `conversionMap` to change it:
+
+### ./bufferSlice.js
+
+```diff
+const fs = require('fs');
+
+const conversionMap = {
+  '88': '65',
+  '89': '66',
+  '90': '67',
+};
+
++ fs.readFile(__filename, (err, buffer) => {
++   let tags = buffer.slice(-5, -1);
++   tags.forEach(
++     (value, index) => tags[index] = conversionMap[value]
++   );
++   console.log(buffer.toString());
++ });
+
++ // TAG: XYZ
+
+```
+
+- Press `F5` key to run app:
+
+![buffer slice](../../99%20Resources/00%20Intro/05%20Buffer/buffer%20slice.png)
+
+- Although `buffer.slice` returns a new `Buffer`, if we modify the new instance, the original will be modified too because the allocated memory of the two objects overlap.
+
 
 # About Lemoncode
 
