@@ -23,11 +23,11 @@ In this sample we are going to learn how to keep clean our code using callbacks.
 
 ### 00 Built in
 
-In this sample we are going to ...
+In this sample we are going to learn how to require Node `built-in` modules. As example we are going to use `os` module and show some methods like `hostname`, `loadavg` and `freemem`.
 
 ### 01 File module
 
-In this sample we are going to ...
+In this sample we are going to learn how to create a custom module and export it to be used in other file using `CommonJS modules`.
 
 ### 02 NPM modules
 
