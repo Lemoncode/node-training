@@ -53,7 +53,7 @@ In this sample we are going to learn how to create and configure a `package.json
 
 ### 00 Slow Operation
 
-In this sample we are going to ...
+In this sample we are going to demonstrate how to get a blocking code.
 
 ### 01 SetImmediate
 
