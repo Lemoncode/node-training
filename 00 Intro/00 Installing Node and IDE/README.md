@@ -229,6 +229,18 @@ charset = utf-8
 
 - More info [eslint](https://eslint.org/), [tslint](https://palantir.github.io/tslint/)
 
+- Finally, to be more confortable working with VS Code, it provides an integrated terminal:
+
+![integrated terminal](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/integrated%20terminal.png)
+
+![bash terminal](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/bash%20terminal.png)
+
+- We could switch between different terminals in typing `Ctrl + Shift + P` and `Select defaul shell` option:
+
+![select default shell](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/select%20default%20shell.png)
+
+![different shells](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/different%20shells.png)
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
