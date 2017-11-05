@@ -1,10 +1,13 @@
 # 04 Process
 
-In this sample we are going to .
+In this sample we are going to use the global object `process` playing with the `exit` and `uncaughtException` events.
 
 Summary steps:
 
--
+- Keep node process busy.
+- Throw exception and see whats happends.
+- Using `exit` event.
+- Using `uncaughtException` event.
 
 # Steps to build it
 
@@ -55,7 +58,7 @@ Summary steps:
 
 ```
 
--
+- First, we are going to keep node process busy to avoid Node finished:
 
 # About Lemoncode
 

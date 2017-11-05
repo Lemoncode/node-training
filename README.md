@@ -25,7 +25,7 @@ In this sample we are going to learn how to keep clean our code using callbacks.
 
 ### 04 Process
 
-In this sample we are going to .
+In this sample we are going to use the global object `process` playing with the `exit` and `uncaughtException` events.
 
 ## 01 Modules
 
