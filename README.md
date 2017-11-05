@@ -49,7 +49,21 @@ In this sample we are going to learn how to create a custom module and export it
 
 In this sample we are going to learn how to create and configure a `package.json` file, install a npm third library and use it.
 
-## 02 Events
+## 02 Concurrency Model and Event Loop
+
+### 00 Slow Operation
+
+In this sample we are going to ...
+
+### 01 SetImmediate
+
+In this sample we are going to learn about `setImmediate` vs `setTimeout` methods.
+
+### 02 NextTick
+
+In this sample we are going to ...
+
+## 03 Events
 
 ### 00 Events
 
@@ -59,7 +73,7 @@ In this sample we are going to ...
 
 In this sample we are going to ...
 
-## 03 Streams
+## 04 Streams
 
 ### 00 Readable stream
 
