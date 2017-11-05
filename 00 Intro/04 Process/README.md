@@ -58,7 +58,26 @@ Summary steps:
 
 ```
 
-- First, we are going to keep node process busy to avoid Node finished:
+- First, we are going to keep the process busy to avoid Node finished:
+
+### ./index.js
+
+```diff
++ process.stdin.resume();
+
+```
+
+- Now, if we call an undefined fuction:
+
+### ./index.js
+
+```diff
+process.stdin.resume();
++ console.dog();
+
+```
+
+- Throw exception and see whats happends.
 
 # About Lemoncode
 
