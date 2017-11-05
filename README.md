@@ -9,7 +9,7 @@ Each sample contains a `README.md` file that indicates the purpose of the sample
 
 ### 00 Installing Node and IDE
 
-In this sample we are going to .
+In this sample we are going to install and configure Node.js and VS Code.
 
 ### 01 Hello
 
