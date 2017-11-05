@@ -62,10 +62,10 @@ nvm list
 
 ![nvm list](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/nvm%20list.png)
 
-- As example we are going to install `node v6.11.1` the previous LTS recommended version by Node.js:
+- As example we are going to install `node v6.11.5` the previous LTS recommended version by Node.js:
 
 ```bash
-nvm install 6.11.1
+nvm install 6.11.5
 ```
 
 ![install version 6](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/install%20version%206.png)
@@ -75,7 +75,7 @@ nvm install 6.11.1
 ![console as administrator](../../99%20Resources/00%20Intro/00%20Installing%20Node%20and%20IDE/console%20as%20administrator.png)
 
 ```bash
-nvm use 6.11.1
+nvm use 6.11.5
 ```
 
 - Now, if we type `node -v`:
