@@ -57,7 +57,7 @@ In this sample we are going to ...
 
 ### 01 SetImmediate
 
-In this sample we are going to ...
+In this sample we are going to learn about `setImmediate` vs `setTimeout` methods.
 
 ### 02 NextTick
 
