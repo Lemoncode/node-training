@@ -33,7 +33,7 @@ In this sample we are going to learn about `Buffer`. We will create three sample
 
 ### 06 JSON Addons
 
-In this sample we are going to .
+In this sample we are going to play with `Node.js` addons.
 
 ## 01 Modules
 
