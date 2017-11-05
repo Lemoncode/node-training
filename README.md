@@ -9,11 +9,11 @@ Each sample contains a `README.md` file that indicates the purpose of the sample
 
 ### 00 Hello
 
-In this sample we are going to ...
+In this sample we are going to create a `hello.js` file with `console.log` message and a VS Code `launch.json` file to run our first Node server.
 
 ### 01 Basic Server
 
-In this sample we are going to ...
+In this sample we are going to create a simple NodeJS server that listen on port `3000`.
 
 ### 02 Callback
 
@@ -60,4 +60,4 @@ In this sample we are going to ...
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
-We specialize in Front End technologies and .NET. [Click here](http://lemoncode.net/services/en/#en-home) to get more info about us. 
+We specialize in Front End technologies and .NET. [Click here](http://lemoncode.net/services/en/#en-home) to get more info about us.
