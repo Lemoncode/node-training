@@ -31,6 +31,10 @@ In this sample we are going to use the global object `process` and playing with 
 
 In this sample we are going to learn about `Buffer`. We will create three samples managing buffers.
 
+### 06 JSON Addons
+
+In this sample we are going to play with `Node.js` addons.
+
 ## 01 Modules
 
 ### 00 Built in
