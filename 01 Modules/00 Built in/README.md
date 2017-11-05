@@ -15,7 +15,7 @@ Summary steps:
 
 ## Prerequisites
 
-- In order to follow this step guides you will also need to take sample _02 Callback_ as starting point.
+- In order to follow this step guides you will also need to take sample _03 Callback_ as starting point.
 
 # Steps
 

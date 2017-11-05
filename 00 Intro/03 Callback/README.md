@@ -1,4 +1,4 @@
-# 02 Callback
+# 03 Callback
 
 In this sample we are going to learn how to keep clean our code using callbacks.
 
@@ -13,7 +13,7 @@ Summary steps:
 
 ## Prerequisites
 
-- In order to follow this step guides you will also need to take sample _01 Basic server_ as starting point.
+- In order to follow this step guides you will also need to take sample _02 Basic server_ as starting point.
 
 # Steps
 
@@ -106,7 +106,7 @@ const oneWordToUpper = (value) => {
 
 - Press `F5` key to run app:
 
-![run app without callbacks](../../99%20Resources/00%20Intro/02%20Callback/run%20app%20without%20callbacks.png)
+![run app without callbacks](../../99%20Resources/00%20Intro/03%20Callback/run%20app%20without%20callbacks.png)
 
 - Use callbacks to keep clean our code. First, we could extract result handling and pass it as parameter:
 
@@ -204,7 +204,7 @@ values.forEach(
 
 - Press `F5` key to run app:
 
-![run app with callbacks](../../99%20Resources/00%20Intro/02%20Callback/run%20app%20with%20callbacks.png)
+![run app with callbacks](../../99%20Resources/00%20Intro/03%20Callback/run%20app%20with%20callbacks.png)
 
 # About Lemoncode
 

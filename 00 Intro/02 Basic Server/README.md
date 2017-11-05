@@ -16,7 +16,7 @@ Summary steps:
 
 ## Prerequisites
 
-- In order to follow this step guides you will also need to take sample _00 Hello_ as starting point.
+- In order to follow this step guides you will also need to take sample _01 Hello_ as starting point.
 
 # Steps
 
@@ -92,11 +92,11 @@ app.listen(port);
 
 ```
 
-- Run app server as we show on _00 Hello_ or press `F5` key.
+- Run app server as we show on _01 Hello_ or press `F5` key.
 
 - Open `http://localhost/3000` in your browser:
 
-![open server in browser](../../99%20Resources/00%20Intro/01%20Basic%20Server/open%20server%20in%20browser.png)
+![open server in browser](../../99%20Resources/00%20Intro/02%20Basic%20Server/open%20server%20in%20browser.png)
 
 # About Lemoncode
 
