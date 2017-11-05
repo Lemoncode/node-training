@@ -1,11 +1,33 @@
-const http = require('http');
+const maxTime = 2000;
 
-const app = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World\n');
-});
+const oneWordToUpper = (value, callback) => {
+  const time = Math.floor((Math.random() * maxTime) + 1);
+  let error = null;
+  let result = null;
+  setTimeout(() => {
+    const splitted = value.split(' ');
+    console.log(splitted);
+    if (splitted.length > 1) {
+      error = { message: 'More than one word!' };
+    } else {
+      result = value.toUpperCase();
+      error = null;
+    }
 
-const port = 3000;
-app.listen(port);
+    callback(error, result, time);
+  }, time);
+};
 
-console.log(`Server running on port ${port}`);
+const handleResults = (error, result, time) => {
+  if (!!error) {
+    console.log(`Error: ${error.message}`);
+  } else {
+    console.log(`The word in upper: ${result}, the elapsed time: ${time} ms`);
+  }
+};
+
+const values = ['jaime', 'nasdan', 'daniel sanchez', 'jaime salas'];
+
+values.forEach(
+  (value) => oneWordToUpper(value, handleResults)
+);

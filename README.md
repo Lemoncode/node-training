@@ -17,7 +17,7 @@ In this sample we are going to create a simple NodeJS server that listen on port
 
 ### 02 Callback
 
-In this sample we are going to ...
+In this sample we are going to learn how to keep clean our code using callbacks.
 
 ## 01 Modules
 
