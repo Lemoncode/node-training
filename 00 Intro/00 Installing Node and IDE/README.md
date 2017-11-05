@@ -96,7 +96,7 @@ node -v
 
 - `EditorConfig` helps developers define and maintain consistent coding styles between different editors and IDEs.
 
-- To configure it, we have to place a `.editorconfig` file in `project root path`:
+- To configure it, we have to add a `.editorconfig` file in `project root path`:
 
 - Top-most EditorConfig file:
 
@@ -178,6 +178,56 @@ charset = utf-8
 + trim_trailing_whitespace = true
 
 ```
+
+- `ESLint` and `TSLint` are linters for JavaScript and TypeScript that it helps to developers to keep homogeneous code. These plugins needs to add a `.eslintrc` or `tslint.json` files in `project root path`.
+
+- An example of `.eslintrc` file could be:
+
+- Enable recommended eslint rules by default:
+
+### ./.eslintrc
+
+```diff
++ {
++   "extends": "eslint:recommended"
++ }
+
+```
+
+- Enable `Node.js` global variables and scoping:
+
+### ./.eslintrc
+
+```diff
+{
+- "extends": "eslint:recommended"
++ "extends": "eslint:recommended",
++ "env": {
++   "node": true
++ }
+}
+
+```
+
+- Configuring specific rules (for example enable to use `console.log`):
+
+### ./.eslintrc
+
+```diff
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true
+- }
++ },
++ "rules": {
++   "no-console": "off"
++ }
+}
+
+```
+
+- More info [eslint](https://eslint.org/), [tslint](https://palantir.github.io/tslint/)
 
 # About Lemoncode
 
