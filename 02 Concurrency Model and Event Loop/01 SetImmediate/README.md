@@ -4,7 +4,8 @@ In this sample we are going to learn about `setImmediate` vs `setTimeout` method
 
 Summary steps:
 
--
+- Running `setImmediate` and `setTimeout` in main thread.
+- Running `setImmediate` and `setTimeout` within an I/O cycle.
 
 # Steps to build it
 
@@ -34,7 +35,55 @@ Summary steps:
 
 ```
 
--
+- `setImmediate` and `setTimeout` are similar but first one is designed to be executed in the `check` phase after the `poll` has has completed. The second one, schedules a script to be run after a minimum threshold in ms has elapsed.
+
+- So, for example, if we run `setImmediate` and `setTimeout` in main thread:
+
+### ./index.js
+```diff
++ setTimeout(() => {
++   console.log('timeout');
++ }, 0);
+
++ setImmediate(() => {
++   console.log('immediate');
++ });
+
+```
+
+- Press `F5` key to run app:
+
+![run main thread one](../../99%20Resources/02%20Concurrency%20Model%20and%20Event%20Loop/01%20SetImmediate/run%20main%20thread%20one.png)
+
+![run main thread two](../../99%20Resources/02%20Concurrency%20Model%20and%20Event%20Loop/01%20SetImmediate/run%20main%20thread%20two.png)
+
+- As we see, the two timers are executed is non-deterministic way, as it is bound by the performance of the process:
+
+- However, if we running `setImmediate` and `setTimeout` within an I/O cycle, the immediate callback is always executed first:
+
+### ./index.js
+```diff
+- setTimeout(() => {
+-   console.log('timeout');
+- }, 0);
+
+- setImmediate(() => {
+-   console.log('immediate');
+- });
++ const fs = require('fs');
+
++ fs.readFile(__filename, () => {
++   setTimeout(() => {
++     console.log('timeout');
++   }, 0);
++   setImmediate(() => {
++     console.log('immediate');
++   });
++ });
+
+```
+
+![run io thread](../../99%20Resources/02%20Concurrency%20Model%20and%20Event%20Loop/01%20SetImmediate/run%20io%20thread.png)
 
 # About Lemoncode
 
