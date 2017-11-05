@@ -23,6 +23,10 @@ In this sample we are going to create a simple NodeJS server that listen on port
 
 In this sample we are going to learn how to keep clean our code using callbacks.
 
+### 04 Process
+
+In this sample we are going to use the global object `process` and playing with the `exit` and `uncaughtException` events.
+
 ## 01 Modules
 
 ### 00 Built in
