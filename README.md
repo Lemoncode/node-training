@@ -75,7 +75,7 @@ In this sample we are going to create a basic sample to work with Node.js `Event
 
 ### 02 External emitter
 
-In this sample we are going to ...
+In this sample we are going to use previous sample, require it from other file and create different instances of `EventEmitter`.
 
 ### 03 Sync to async class
 
