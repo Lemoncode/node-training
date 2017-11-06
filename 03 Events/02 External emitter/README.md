@@ -110,8 +110,7 @@ node index
 
 -   return emitter;
 +   const self = this;
-+   let count = 0;
-+   process.nextTick(() => deferredProcess(count, countries, self));
++   process.nextTick(() => deferredProcess(0, countries, self));
 };
 
 + util.inherits(
@@ -161,8 +160,7 @@ const deferredProcess = (count, countries, emitter) => {
 
 - const Retriever = function(countries) {
 -   const self = this;
--   let count = 0;
--   process.nextTick(() => deferredProcess(count, countries, self));
+-   process.nextTick(() => deferredProcess(0, countries, self));
 - };
 
 - util.inherits(
