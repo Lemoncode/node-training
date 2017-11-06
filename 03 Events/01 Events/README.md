@@ -4,7 +4,9 @@ In this sample we are going to create a basic sample to work with Node.js `Event
 
 Summary steps:
 
--
+- Create `EventEmitter` instance.
+- Simulate an async process to retrieve data.
+- Implement event handlers.
 
 # Steps to build it
 
