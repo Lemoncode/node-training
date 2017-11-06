@@ -79,7 +79,7 @@ In this sample we are going to use previous sample, require it from other file a
 
 ### 03 Sync to async class
 
-In this sample we are going to ...
+In this sample we are going to learn how to migrate sync function using `events` to `async` code.
 
 ### 04 Task list
 
