@@ -36,7 +36,7 @@ const countOddPromises = (file) => {
     .catch(console.error);
 };
 
-const countOddAsync = async function (file) {
+const countOddAsync = async (file) => {
   try {
     const lines = await readFileAsArray(file);
     const numbers = lines.map(Number);
