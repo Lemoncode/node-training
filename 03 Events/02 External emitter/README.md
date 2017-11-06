@@ -8,7 +8,7 @@ Summary steps:
 - Rename file to `retriever.js`.
 - Create `index.js` calling to `retriever`.
 - Create `EventEmitter` instance using `util.inherits`.
-- Create `EventEmitter` instance `ES6 classes`.
+- Create `EventEmitter` instance using `ES6 classes`.
 
 # Steps to build it
 
@@ -137,6 +137,46 @@ node index
 retrieverHandler.on('start', () => console.log('Started'));
 retrieverHandler.on('data', (data) => console.log(`Data: ${data}`));
 retrieverHandler.on('end', (data) => console.log(`End data: ${data}`));
+
+```
+
+- If we could use `ES6`, we could create `EventEmitter` instance using `ES6 classes`:
+
+### ./retriever.js
+
+```diff
+- const util = require('util');
++ const EventEmitter = require('events').EventEmitter;
+
+const deferredProcess = (count, countries, emitter) => {
+  emitter.emit('start');
+  const interval = setInterval(() => {
+    emitter.emit('data', ++count);
+    if (count === countries) {
+      emitter.emit('end', count);
+      clearInterval(interval);
+    }
+  }, 300);
+};
+
+- const Retriever = function(countries) {
+-   const self = this;
+-   let count = 0;
+-   process.nextTick(() => deferredProcess(count, countries, self));
+- };
+
+- util.inherits(
+-   Retriever,
+-   require('events').EventEmitter
+- );
+
+- module.exports = Retriever;
++ module.exports = class Retriever extends EventEmitter {
++   constructor(countries) {
++     super();
++     process.nextTick(() => deferredProcess(0, countries, this));
++   }
++ };
 
 ```
 
