@@ -65,15 +65,27 @@ In this sample we are going to learn how to use `nextTick` method.
 
 ## 03 Events
 
-### 00 Events
+### 00 Handling Async Code
 
 In this sample we are going to ...
 
-### 01 External emitter
+### 01 Events
 
 In this sample we are going to ...
 
-## 04 Streams
+### 02 External emitter
+
+In this sample we are going to ...
+
+### 03 Sync to async class
+
+In this sample we are going to ...
+
+### 04 Task list
+
+In this sample we are going to ...
+
+## 06 Streams
 
 ### 00 Readable stream
 
