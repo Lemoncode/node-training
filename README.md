@@ -67,7 +67,7 @@ In this sample we are going to learn how to use `nextTick` method.
 
 ### 00 Handling Async Code
 
-In this sample we are going to ...
+In this sample we are going to working with async code using `callbacks`, `Promises` and `async/await`.
 
 ### 01 Events
 
