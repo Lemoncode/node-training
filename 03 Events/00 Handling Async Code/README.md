@@ -1,10 +1,13 @@
 # 00 Handling Async Code
 
-In this sample we are going to working with async code using `callbacks`, `Promises` and `async`.
+In this sample we are going to working with async code using `callbacks`, `Promises` and `async/await`.
 
 Summary steps:
 
 - Implement an async function to `readFileAsArray` using `callbacks`.
+- Implement an async function to `readFileAsArray` using `Promises`.
+- Get support for two flavours.
+- Implement using `async/await`.
 
 # Steps to build it
 
@@ -57,7 +60,7 @@ Summary steps:
 + const readFileAsArray = (file, cb) => {
 +   fs.readFile(file, (err, data) => {
 +     if (err) {
-+       return err
++       return cb(err);
 +     };
 
 +     const lines = data.toString().trim().split('\n');
@@ -88,7 +91,7 @@ const fs = require('fs');
 const readFileAsArray = (file, cb) => {
   fs.readFile(file, (err, data) => {
     if (err) {
-      return err
+      return cb(err);
     };
 
     const lines = data.toString().trim().split('\n');
@@ -128,7 +131,7 @@ const fs = require('fs');
 +   return new Promise((resolve, reject) => {
     fs.readFile(file, (err, data) => {
       if (err) {
--       return err
+-       return cb(err);
 +       reject(err);
       };
 
@@ -152,6 +155,281 @@ const fs = require('fs');
 +   })
 +   .catch(console.error);
 ```
+
+- This is great because we got a cleaner code, but the official way to go on Node it's the callback style. Whats if we get the two flavours?:
+
+### ./index.js
+
+```diff
+const fs = require('fs');
+
+- const readFileAsArray = (file) => {
++ const readFileAsArray = (file, cb = () => { }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        reject(err);
++       return cb(error);
+      };
+
+      const lines = data.toString().trim().split('\n');
+      resolve(lines);
++     cb(null, lines);
+    });
+  });
+};
+
+readFileAsArray('./numbers')
+  .then((lines) => {
+    const numbers = lines.map(Number);
+    const oddNumber = numbers.filter(number => number % 2 === 1);
+    console.log(`odd numbers count: ${oddNumber.length}`);
+  })
+  .catch(console.error);
+
+```
+
+- And for using with `callbacks` we could restore previous version:
+
+### ./index.js
+
+```diff
+const fs = require('fs');
+
+const readFileAsArray = (file, cb = () => { }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        reject(err);
+        return cb(error);
+      };
+
+      const lines = data.toString().trim().split('\n');
+      resolve(lines);
+      cb(null, lines);
+    });
+  });
+};
+
+- readFileAsArray('./numbers')
+-   .then((lines) => {
++ readFileAsArray('./numbers', (err, lines) => {
++   if (err) {
++     throw err
++   };
+    const numbers = lines.map(Number);
+    const oddNumber = numbers.filter(number => number % 2 === 1);
+    console.log(`odd numbers count: ${oddNumber.length}`);
+- })
+- .catch(console.error);
++ });
+
+```
+
+- Next step is implement it using `async/await`. But it's only available for `7.x` or higher `Node.js` version. So first, we need to change `node version` using `nvm`:
+
+```bash
+nvm use 8.9.0
+```
+
+- To ensure we have `async/await`:
+
+```bash
+node --v8-options | grep async
+```
+
+- Now we could rename `index.js` to `countOdd.js`:
+
+### ./countOdd.js
+
+```javascript
+const fs = require('fs');
+
+const readFileAsArray = (file, cb = () => { }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        reject(err);
+        return cb(error);
+      };
+
+      const lines = data.toString().trim().split('\n');
+      resolve(lines);
+      cb(null, lines);
+    });
+  });
+};
+
+readFileAsArray('./numbers', (err, lines) => {
+  if (err) {
+    throw err
+  };
+  const numbers = lines.map(Number);
+  const oddNumber = numbers.filter(number => number % 2 === 1);
+  console.log(`odd numbers count: ${oddNumber.length}`);
+});
+
+```
+
+- Export a function named `countOddCallback` and `countOddPromises`:
+
+### ./countOdd.js
+
+```diff
+const fs = require('fs');
+
+const readFileAsArray = (file, cb = () => { }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        reject(err);
+        return cb(error);
+      };
+
+      const lines = data.toString().trim().split('\n');
+      resolve(lines);
+      cb(null, lines);
+    });
+  });
+};
+
++ const countOddCallback = (file) => {
+- readFileAsArray('./numbers', (err, lines) => {
++ readFileAsArray(file, (err, lines) => {
+    if (err) {
+      throw err
+    };
+    const numbers = lines.map(Number);
+    const oddNumber = numbers.filter(number => number % 2 === 1);
+    console.log(`odd numbers count: ${oddNumber.length}`);
+  });
++ };
+
++ const countOddPromises = (file) => {
++   readFileAsArray(file)
++     .then((lines) => {
++       const numbers = lines.map(Number);
++       const oddNumber = numbers.filter(number => number % 2 === 1);
++       console.log(`odd numbers count: ${oddNumber.length}`);
++     })
++     .catch(console.error);
++ };
+
++ module.exports = {
++   countOddCallback,
++   countOddPromises,
++ }
+
+```
+
+- Create `index.js` file to use it:
+
+### ./index.js
+
+```javascript
+const {
+  countOddCallback,
+  countOddPromises,
+} = require('./countOdd');
+
+countOddCallback('./numbers');
+countOddPromises('./numbers');
+
+
+```
+
+- Run app:
+
+```bash
+node index
+```
+
+![run app callbacks and promises](../../99%20Resources/03%20Events/00%20Handling%20Async%20Code/run%20app%20callbacks%20and%20promises.png)
+
+- And now, export `countOddAsync` using `async/await`:
+
+### ./countOdd.js
+
+```diff
+const fs = require('fs');
+
+const readFileAsArray = (file, cb = () => { }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
+        reject(err);
+        return cb(error);
+      };
+
+      const lines = data.toString().trim().split('\n');
+      resolve(lines);
+      cb(null, lines);
+    });
+  });
+};
+
+const countOddCallback = (file) => {
+  readFileAsArray(file, (err, lines) => {
+    if (err) {
+      throw err
+    };
+    const numbers = lines.map(Number);
+    const oddNumber = numbers.filter(number => number % 2 === 1);
+    console.log(`odd numbers count: ${oddNumber.length}`);
+  });
+};
+
+const countOddPromises = (file) => {
+  readFileAsArray(file)
+    .then((lines) => {
+      const numbers = lines.map(Number);
+      const oddNumber = numbers.filter(number => number % 2 === 1);
+      console.log(`odd numbers count: ${oddNumber.length}`);
+    })
+    .catch(console.error);
+};
+
++ const countOddAsync = async function (file) {
++   try {
++     const lines = await readFileAsArray(file);
++     const numbers = lines.map(Number);
++     const oddNumber = numbers.filter(number => number % 2 === 1);
++     console.log(`odd numbers count: ${oddNumber.length}`);
++   } catch (error) {
++     console.log(error);
++   }
++ }
+
+module.exports = {
+  countOddCallback,
+  countOddPromises,
++ countOddAsync
+}
+
+```
+
+### ./index.js
+
+```diff
+const {
+  countOddCallback,
+  countOddPromises,
++ countOddAsync,
+} = require('./countOdd');
+
+countOddCallback('./numbers');
+countOddPromises('./numbers');
++ countOddAsync('./numbers');
+
+```
+
+- Run app:
+
+```bash
+node index
+```
+
+![run app callbacks promises and async](../../99%20Resources/03%20Events/00%20Handling%20Async%20Code/run%20app%20callbacks%20promises%20and%20async.png)
 
 # About Lemoncode
 
