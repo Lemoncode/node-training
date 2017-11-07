@@ -10,5 +10,12 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (input) => {
-  client.emit('command', input);
+  const [command, ...args] = input.split(' ');
+  client.emit('command', command, args);
+});
+
+server.on('response', (response) => {
+  process.stdout.write('\x1Bc');
+  process.stdout.write(response);
+  process.stdout.write('\n\>');
 });

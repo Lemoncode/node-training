@@ -168,6 +168,250 @@ rl.on('line', (input) => {
 
 ![connect with server](../../99%20Resources/03%20Events/04%20Task%20list/connect%20with%20server.gif)
 
+- Now that we know it's working, we could define some commands that will be responded by server:
+
+### ./server.js
+
+```diff
+const EventEmitter = require('events');
+
+class Server extends EventEmitter {
+  constructor(client) {
+    super();
+
+    client.on('command', (command) => {
+      console.log(`Command: ${command}`);
+    });
+  }
+
++ help() {
++   this.emit('response', 'help...');
++ }
+
++ add() {
++   this.emit('response', 'add...');
++ }
+
++ ls() {
++   this.emit('response', 'ls...');
++ }
+
++ delete() {
++   this.emit('response', 'delete...');
++ }
+}
+
+module.exports = (client) => new Server(client);
+
+```
+
+- For unknown commands, we will response `Unknown`:
+
+### ./server.js
+
+```diff
+const EventEmitter = require('events');
+
++ const commands = {
++   help: 'help',
++   add: 'add',
++   ls: 'ls',
++   delete: 'delete',
++ };
+
+class Server extends EventEmitter {
+  constructor(client) {
+    super();
+
+    client.on('command', (command) => {
+-     console.log(`Command: ${command}`);
++     this.isCommandDefined(command) ?
++       this[command]() :
++       this.emit('response', 'Unknown');
+    });
+  }
+
++ isCommandDefined(command) {
++   return Boolean(commands[command]);
++ };
+
+  help() {
+    this.emit('response', 'help...');
+  }
+
+  add() {
+    this.emit('response', 'add...');
+  }
+
+  ls() {
+    this.emit('response', 'ls...');
+  }
+
+  delete() {
+    this.emit('response', 'delete...');
+  }
+}
+
+module.exports = (client) => new Server(client);
+
+```
+
+- Finally, we need to implement the `response` handler in `client` side:
+
+### ./client.js
+
+```diff
+const EventEmitter = require('events');
+const readline = require('readline');
+
+const client = new EventEmitter();
+const server = require('./server')(client);
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.on('line', (input) => {
+  client.emit('command', input);
+});
+
++ server.on('response', (response) => {
++   console.log(response);
++ });
+
+```
+
+![send commands](../../99%20Resources/03%20Events/04%20Task%20list/send%20commands.gif)
+
+- Now we could make it more user friendly like:
+
+### ./client.js
+
+```diff
+...
+
+server.on('response', (response) => {
+- console.log(response);
++ process.stdout.write('\x1Bc');
++ process.stdout.write(response);
++ process.stdout.write('\n\>');
+});
+
+```
+
+![friendly response](../../99%20Resources/03%20Events/04%20Task%20list/friendly%20response.gif)
+
+- At the beginning we can do something from server to make that user understand that has to type a command:
+
+### ./server.js
+
+```diff
+...
+
+class Server extends EventEmitter {
+  constructor(client) {
+    super();
+
++   this.emit('response', 'Type a command');
+
+    client.on('command', (command) => {
+      this.isCommandDefined(command) ?
+        this[command]() :
+        this.emit('response', 'Unknown');
+    });
+  }
+...
+
+```
+
+- But this is not going to work due to when this line is executed is when client side is instantiating the `server` class:
+
+### ./client.js
+
+```javascript
+const server = require('./server')(client);
+
+```
+
+- To solve this, we could wrap i on `process.nextTick`:
+
+### ./server.js
+
+```diff
+...
+
+class Server extends EventEmitter {
+  constructor(client) {
+    super();
+
++   process.nextTick(() => {
+      this.emit('response', 'Type a command');
++   });
+
+    client.on('command', (command) => {
+      this.isCommandDefined(command) ?
+        this[command]() :
+        this.emit('response', 'Unknown');
+    });
+  }
+...
+
+```
+
+![initial text](../../99%20Resources/03%20Events/04%20Task%20list/initial%20text.gif)
+
+- There are some commands that need associated payload, for example the `add` command:
+
+### ./client.js
+
+```diff
+...
+
+rl.on('line', (input) => {
+- client.emit('command', input);
++ const [command, ...args] = input.split(' ');
++ client.emit('command', command, args);
+});
+
+...
+
+```
+
+### ./server.js
+
+```diff
+...
+
+class Server extends EventEmitter {
+  constructor(client) {
+    super();
+
+    process.nextTick(() => {
+      this.emit('response', 'Type a command');
+    });
+
+-   client.on('command', (command) => {
++   client.on('command', (command, args) => {
+      this.isCommandDefined(command) ?
+-       this[command]() :
++       this[command](args) :
+        this.emit('response', 'Unknown');
+    });
+  }
+...
+
+- add() {
++ add(args) {
+-   this.emit('response', 'add...');
++   this.emit('response', args.join(' '));
+  }
+...
+
+```
+
+![passing args](../../99%20Resources/03%20Events/04%20Task%20list/passing%20args.gif)
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
