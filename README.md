@@ -61,19 +61,31 @@ In this sample we are going to learn about `setImmediate` vs `setTimeout` method
 
 ### 02 NextTick
 
-In this sample we are going to ...
+In this sample we are going to learn how to use `nextTick` method.
 
 ## 03 Events
 
-### 00 Events
+### 00 Handling Async Code
+
+In this sample we are going to working with async code using `callbacks`, `Promises` and `async/await`.
+
+### 01 Events
 
 In this sample we are going to ...
 
-### 01 External emitter
+### 02 External emitter
 
 In this sample we are going to ...
 
-## 04 Streams
+### 03 Sync to async class
+
+In this sample we are going to ...
+
+### 04 Task list
+
+In this sample we are going to ...
+
+## 06 Streams
 
 ### 00 Readable stream
 
