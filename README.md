@@ -83,7 +83,7 @@ In this sample we are going to learn how to migrate sync function using `events`
 
 ### 04 Task list
 
-In this sample we are going to ...
+In this sample we are going to create a `client` and `server` to send commands.
 
 ## 06 Streams
 
