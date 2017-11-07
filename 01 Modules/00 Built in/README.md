@@ -1,10 +1,15 @@
 # 00 Built in
 
-In this sample we are going to learn how to require Node `built-in` modules. As example we are going to use `os` module.
+In this sample we are going to learn how to require Node `built-in` modules. As example we are going to use `os` module and show some methods like `hostname`, `loadavg` and `freemem`.
 
 Summary steps:
 
--
+- Remove previous sample code.
+- Intro Node.js `built-in` modules.
+- The `os` module.
+- The `hostname` method.
+- The `loadavg` method.
+- The `freemem` method.
 
 # Steps to build it
 
@@ -14,7 +19,7 @@ Summary steps:
 
 # Steps
 
-- Remove previous sample code.
+- Remove previous sample code:
 
 ### ./index.js
 
@@ -55,7 +60,75 @@ Summary steps:
 
 ```
 
--
+- Node.js has a set of `built-in` modules without install any third library. Node has an API for each version, for example [v6.x](https://nodejs.org/docs/latest-v6.x/api/documentation.html), [v8.x](https://nodejs.org/dist/latest-v8.x/docs/api/documentation.html), etc.
+
+- As example we are going to require [`os`](https://nodejs.org/docs/latest-v6.x/api/os.html) module. This module provides some `operating system-related` utility methods:
+
+### ./index.js
+
+```diff
++ const os = require('os');
+
+```
+
+- The `hostname` _method returns the hostname of the operating system as a string._:
+
+### ./index.js
+
+```diff
+const os = require('os');
+
++ console.log(`Host: ${os.hostname()}`);
+
+```
+
+- Press `F5` key to run app:
+
+![hostname method](../../99%20Resources/01%20Modules/00%20Built%20in/hostname%20method.png)
+
+- The `loadavg` _method returns an array containing the 1, 5, and 15 minute load averages._ In this case, is a `UNIX-specific` concept, so is not compatible with Windows platforms.
+
+### ./index.js
+
+```diff
+const os = require('os');
+
+console.log(`Host: ${os.hostname()}`);
++ console.log(`15 min. load avarage ${os.loadavg()}`);
+
+```
+
+- `loadavg` in Windows, press `F5` key to run app:
+
+![loadavg in windows](../../99%20Resources/01%20Modules/00%20Built%20in/loadavg%20in%20windows.png)
+
+- `loadavg` in UNIX, press `F5` key to run app:
+
+![loadavg in unix](../../99%20Resources/01%20Modules/00%20Built%20in/loadavg%20in%20unix.png)
+
+- The `freemem` _method returns the amount of free system memory in bytes as an integer_:
+
+### ./index.js
+
+```diff
+const os = require('os');
+
+console.log(`Host: ${os.hostname()}`);
+console.log(`15 min. load avarage ${os.loadavg()}`);
+
++ const toMb = (memory) => (
++   Math.round((memory / 1024 / 1024) * 100) / 100
++ );
+
++ console.log(`
++   ${toMb(os.freemem())} of ${toMb(os.totalmem())} Mb free
++ `);
+
+```
+
+- Press `F5` key to run app:
+
+![freemem method](../../99%20Resources/01%20Modules/00%20Built%20in/freemem%20method.png)
 
 # About Lemoncode
 
