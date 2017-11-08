@@ -42,7 +42,7 @@ Summary steps:
 
 - Create `c++` file:
 
-### ./hello.cc
+### ./addon-src/hello.cc
 ```c++
 #include <node.h>
 
@@ -72,7 +72,7 @@ NODE_MODULE(NODE_GYP_MODULE_NAME, init)
 
 - Now, we need to create a `gyp` file for build configuration.
 
-### ./binding.gyp
+### ./addon-src/binding.gyp
 
 ```gyp
 {
@@ -85,6 +85,7 @@ NODE_MODULE(NODE_GYP_MODULE_NAME, init)
 }
 
 ```
+- This file tells compiler which file to compile and what target name to use for the compiled module.
 
 - This file is used by [`node-gyp`](https://github.com/nodejs/node-gyp) library to compile `Node.js` addons. So we need to install this lib:
 
@@ -97,6 +98,56 @@ npm install node-gyp -g
 ```bash
 node-gyp configure
 ```
+
+- This will create the make files under a build directory.
+
+- Now, we are ready to run a build that should create the binary compiled addon.node file. This is the file that we can require.
+
+```bash
+node-gyp build
+```
+- We copy the new generated file `addon.node`. We have to be on directory `addon-src`
+
+```bash
+cp build/Release/addon.node ../node_modules
+```
+
+- Update the code on ./index.js
+
+```diff
++const addon = require('addon');
++
++console.log(addon.hello());
+```
+- For last we remind that Node, supports import 3 classes of files:
+* .js
+* .json
+* .node
+
+- If no extension is provided when we are requiring a file, Node, will try first `.js`, then `.json`, and for last `.node`.
+
+- We can verify the supported extensions using the following command on node terminal
+
+```node
+require.extensions
+```
+
+```node
+require.extensions['.js'].toString()
+```
+
+```node
+require.extensions['.json'].toString()
+```
+
+```node
+require.extensions['.node'].toString()
+```
+
+- For this extension Node will compile the content, for a `.json` it uses JSON.parse on the content. For a .node file uses process.dlopen
+
+
+![require_extensions](../../99%20Resources/00%20Intro/06%20JSON%20Addons/require_extensions.png)
 
 # About Lemoncode
 
