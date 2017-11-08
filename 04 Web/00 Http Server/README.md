@@ -1,10 +1,11 @@
 # 00 Http Server
 
-In this sample we are going to .
+In this sample we are going to create a basic server using `server.on('request')` and see info about `HTTP` server response.
 
 Summary steps:
 
 - Create `index.js` file with `http` server.
+- Get info about `HTTP` server response.
 
 # Steps to build it
 
