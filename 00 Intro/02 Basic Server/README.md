@@ -10,7 +10,7 @@ Summary steps:
 - Listen on port `3000`.
 - Show `console.log` to ensure server is running.
 - Run app server.
-- Open `http://localhost/3000`.
+- Open `http://localhost:3000`.
 
 # Steps to build it
 
@@ -94,7 +94,7 @@ app.listen(port);
 
 - Run app server as we show on _01 Hello_ or press `F5` key.
 
-- Open `http://localhost/3000` in your browser:
+- Open `http://localhost:3000` in your browser:
 
 ![open server in browser](../../99%20Resources/00%20Intro/02%20Basic%20Server/open%20server%20in%20browser.png)
 

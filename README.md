@@ -85,6 +85,24 @@ In this sample we are going to learn how to migrate sync function using `events`
 
 In this sample we are going to create a `client` and `server` to send commands.
 
+## 04 Web
+
+### 00 Http Server
+
+In this sample we are going to create a basic server using `server.on('request')` and see info about `HTTP` server response.
+
+### 01 Http Server Stream
+
+In this sample we are going to ...
+
+### 02 Http Client
+
+In this sample we are going to ...
+
+### 03 Routes
+
+In this sample we are going to ...
+
 ## 06 Streams
 
 ### 00 Readable stream
