@@ -146,6 +146,9 @@ require.extensions['.node'].toString()
 
 - For this extension Node will compile the content, for a `.json` it uses JSON.parse on the content. For a .node file uses process.dlopen
 
+
+![require_extensions](../../99%20Resources/00%20Intro/06%20JSON%20Addons/require_extensions.png)
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
