@@ -89,7 +89,7 @@ In this sample we are going to create a `client` and `server` to send commands.
 
 ### 00 Http Server
 
-In this sample we are going to ...
+In this sample we are going to create a basic server using `server.on('request')` and see info about `HTTP` server response.
 
 ### 01 Http Server Stream
 
