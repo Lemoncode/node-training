@@ -97,7 +97,7 @@ In this sample we are going to learn the differences between `res.write` and `re
 
 ### 02 Http Client
 
-In this sample we are going to ...
+In this sample we are going to learn how to make HTTP request from Node.
 
 ### 03 Routes
 
