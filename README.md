@@ -107,7 +107,7 @@ In this sample we are going to learn how create an http server and manage differ
 
 ### 00 OS
 
-In this sample we are going to ...
+In this sample we are going to see some `os` module methods.
 
 ### 01 FS Delete
 
