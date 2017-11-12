@@ -103,6 +103,24 @@ In this sample we are going to learn how to make HTTP request from Node.
 
 In this sample we are going to learn how create an http server and manage different routes.
 
+## 05 Built-in Libraries
+
+### 00 OS
+
+In this sample we are going to ...
+
+### 01 FS Delete
+
+In this sample we are going to ...
+
+### 02 FS Truncate
+
+In this sample we are going to ...
+
+### 03 FS Watch
+
+In this sample we are going to ...
+
 ## 06 Streams
 
 ### 00 Readable stream
