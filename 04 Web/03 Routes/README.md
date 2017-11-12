@@ -5,7 +5,10 @@ In this sample we are going to learn how create an http server and manage differ
 Summary steps:
 
 - Create basic server.
+- Define `home` route.
 - Add `router handler`.
+- Create `redirect` route.
+- Create `api` route to work with `JSON`.
 
 # Steps to build it
 
