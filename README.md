@@ -101,7 +101,7 @@ In this sample we are going to learn how to make HTTP request from Node.
 
 ### 03 Routes
 
-In this sample we are going to ...
+In this sample we are going to learn how create an http server and manage different routes.
 
 ## 06 Streams
 
