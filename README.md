@@ -93,7 +93,7 @@ In this sample we are going to create a basic server using `server.on('request')
 
 ### 01 Http Server Stream
 
-In this sample we are going to ...
+In this sample we are going to learn the differences between `res.write` and `res.end`.
 
 ### 02 Http Client
 
