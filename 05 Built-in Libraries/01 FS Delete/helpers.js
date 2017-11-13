@@ -12,4 +12,6 @@ exports.convertToUnixEpoch = (index) => (
   (Date.now() - index * getMillisecondsPerDay()) / 1000
 );
 
-exports.logger = (message) => console.log(`${new Date().toUTCString()}: ${message}`);
+exports.convertToLocalDate = (unixEpoch) => (
+  new Date(unixEpoch * 1000)
+);
