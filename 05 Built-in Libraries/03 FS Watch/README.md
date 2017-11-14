@@ -5,7 +5,8 @@ In this sample we are going to implement `app` to watch files in specific folder
 Summary steps:
 
 - Implement `logger` method in `helpers.js` file.
--
+- Use `fs.watch` method.
+- Implement `add`, `delete` and `modify` file handlers.
 
 # Steps to build it
 
