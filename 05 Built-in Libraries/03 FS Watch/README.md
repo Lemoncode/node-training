@@ -121,7 +121,7 @@ filesWatcher.on('error', (err) => logger(err));
 
 ```
 
-- Finally, we could implement `add` and `delete` handlers:
+- Now it's time to implement `add` and `delete` handlers:
 
 ### ./index.js
 
@@ -166,6 +166,8 @@ filesWatcher.on('change', (event, filename) => {
 filesWatcher.on('error', (err) => logger(err));
 
 ```
+
+- Finally we have to create the `watch` folder and run app:
 
 ![run app](../../99%20Resources/05%20Built-in%20Libraries/03%20FS%20Watch/run%20app.gif)
 
