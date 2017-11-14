@@ -4,7 +4,9 @@ In this sample we are going to create an app for truncate a corrupted file with 
 
 Summary steps:
 
--
+- Add `corrupted file` in `files/http.js` file.
+- Implement `createProcessFiles` method.
+- Implement `processSingleFile` method.
 
 # Steps to build it
 
@@ -99,7 +101,7 @@ const files = getFiles(dirname);
 
 ```
 
-- CAMBIAR:
+- Finally, we are going to implement the `processSingleFile` method for truncate the corrupted file:
 
 ### ./index.js
 
