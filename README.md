@@ -145,7 +145,7 @@ In this sample we are going to play with `Duplex` class from `stream` module.
 
 ### 05 Transform
 
-In this sample we are going to ...
+In this sample we are going to play with `Transform` class from `stream` module.
 
 ### 06 Zip
 
