@@ -4,7 +4,10 @@ In this sample we are going to send an http `request` to understand a `readable 
 
 Summary steps:
 
--
+- Install `request` library.
+- Create a `readable` stream from `request`.
+- Implement `data` handler.
+- Implement `end` handler.
 
 # Steps to build it
 
