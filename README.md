@@ -125,7 +125,7 @@ In this sample we are going to implement `app` to watch files in specific folder
 
 ### 00 Intro Readable Stream
 
-In this sample we are going to ...
+In this sample we are going to send an http `request` to understand a `readable stream`.
 
 ### 01 Reading Big Files
 
