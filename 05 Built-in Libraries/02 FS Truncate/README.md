@@ -153,6 +153,8 @@ const processFiles = createProcessFiles(files, pathResolver);
 
 ```
 
+![run app](../../99%20Resources/05%20Built-in%20Libraries/02%20FS%20Truncate/run%20app.gif)
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
