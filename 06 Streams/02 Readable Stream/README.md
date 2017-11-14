@@ -4,7 +4,9 @@ In this sample we are going to play with `Readable` class from `stream` module.
 
 Summary steps:
 
--
+- Create `Readable` stream.
+- Push data `on demand`.
+- Add `timeout` to represent `on demand` behaviour.
 
 # Steps to build it
 
