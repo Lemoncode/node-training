@@ -133,7 +133,7 @@ In this sample we are going to learn how to improve performance reading big file
 
 ### 02 Readable Stream
 
-In this sample we are going to ...
+In this sample we are going to play with `Readable` class from `stream` module.
 
 ### 03 Writable Stream
 
