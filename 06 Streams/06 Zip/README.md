@@ -5,6 +5,10 @@ In this sample we are going to use the `zlib` module to crompress a file and usi
 Summary steps:
 
 - Create `test` file to be compressed.
+- Implement the `compress` method.
+- Print `console.log` when finish.
+- Print `progress` indicator using `on` event.
+- Print `progress` indicator using `Transform`.
 
 # Steps to build it
 
@@ -43,7 +47,7 @@ console.log('I am the test file');
 
 ![compress file](../../99%20Resources/06%20Streams/06%20Zip/compress%20file.gif)
 
-- The cool thing about pipes is that we could combine with events if need it.
+- The cool thing about `pipes` is that we could combine with events if need it.
 
 - For example, we could `console.log` a `done` message when it write the file into file system after compression. We will need to use the `finish` event on the writable stream:
 
