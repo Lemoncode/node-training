@@ -1,13 +1,9 @@
-const request = require('request');
+const fs = require('fs');
+const server = require('http').createServer();
 
-const readableStream = request('http://www.leanmood.com/');
+server.on('request', (req, res) => {
+  const src = fs.createReadStream('./big.file');
+  src.pipe(res);
+});
 
-const dataHandler = (counter) => (chunk) => {
-  console.log(`Data: ${chunk}`);
-  setTimeout(() => console.log(`Chunk processed ${++counter}`), 3000);
-};
-
-const endHandler = () => console.log('Finished.');
-
-readableStream.on('data', dataHandler(0));
-readableStream.on('end', endHandler);
+server.listen(4000);
