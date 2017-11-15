@@ -1,10 +1,13 @@
 # 00 Installing Mongo
 
-In this sample we are going to
+In this sample we are going to install and configure MongoDB.
 
 Summary steps:
 
 - Install last recommended Mongo version.
+- Set `Environment Variables` path.
+- Create `data` folder.
+- Run `mongod` and `mongo`.
 
 # Steps to build it
 
@@ -16,7 +19,7 @@ Summary steps:
 
 - Install like next, next, complete, finish.
 
-- Now, we should have Mongo installed in `C:\Program Files\MongoDB\Server\3.4\bin` path. Mongo does not set the `mongo`'s environment variables by default, so we have to do it:
+- Now, we should have Mongo installed in `C:\Program Files\MongoDB\Server\3.4\bin` path. Mongo does not set the `mongo`'s environment variables path by default, so we have to do it:
 
 ![00 Search environment variables](../../99%20Resources/00%20Intro/00%20Installing%20Mongo/00%20Search%20environment%20variables.png)
 
