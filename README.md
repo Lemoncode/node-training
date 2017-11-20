@@ -119,7 +119,7 @@ In this sample we are going to create an app for truncate a corrupted file with 
 
 ### 03 FS Watch
 
-In this sample we are going to ...
+In this sample we are going to implement `app` to watch files in specific folder.
 
 ## 06 Streams
 

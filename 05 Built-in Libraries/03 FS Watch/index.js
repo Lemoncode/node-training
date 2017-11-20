@@ -1,46 +1,38 @@
 const fs = require('fs');
 const path = require('path');
-const dirname = path.join(__dirname, 'files');
-const { resolveFilePath, getFiles } = require('./helpers');
+const { logger, getFiles } = require('./helpers');
+const dirname = path.join(__dirname, 'watch');
 
-const resolveTruncateLength = (filePath) => {
-  return new Promise((resolve, reject) => {
-    fs.stat(filePath, (err, stats) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(stats.size / 2);
-    });
-  });
+const isAddOrDeleteOperation = (event) => event === 'rename';
+
+const currentFiles = getFiles(dirname);
+const resolveFileIndex = (filename) => currentFiles.indexOf(filename);
+
+const isDeleteOperation = (index) => (index >= 0);
+
+const deleteHandler = (filename, index) => {
+  currentFiles.splice(index, 1);
+  logger(`${filename} removed`);
 };
 
-const truncateData = (length, filePath) => {
-  return new Promise((resolve, reject) => {
-    console.log(length);
-    fs.truncate(filePath, length, (err) => {
-      if (err) {
-        reject(err);
-      }
-      resolve('success');
-    });
-  });
+const addHandler = (filename) => {
+  currentFiles.push(filename);
+  logger(`${filename} added`);
 };
 
-const processSingleFile = (filepath) => {
-  resolveTruncateLength(filepath)
-    .then((length) => truncateData(length, filepath))
-    .catch(err => console.log(err));
-};
+const modifyHandler = (filename) => logger(`${filename} modified`);
 
-const createProcessFiles = (files, pathResolver) => (processSingleFile) => {
-  files.forEach((filename) => {
-    const filepath = pathResolver(filename);
-    processSingleFile(filepath);
-  });
-};
+const filesWatcher = fs.watch(dirname);
+filesWatcher.on('change', (event, filename) => {
+  logger(`Event: ${event}, File name: ${filename}`);
+  if (isAddOrDeleteOperation(event)) {
+    const index = resolveFileIndex(filename);
+    (isDeleteOperation(index)) ?
+      deleteHandler(filename, index) :
+      addHandler(filename);
+  } else {
+    modifyHandler(filename);
+  }
+});
 
-const pathResolver = resolveFilePath(dirname);
-const files = getFiles(dirname);
-
-const processFiles = createProcessFiles(files, pathResolver);
-processFiles(processSingleFile);
+filesWatcher.on('error', (err) => logger(err));
