@@ -111,7 +111,7 @@ In this sample we are going to see some `os` module methods.
 
 ### 01 FS Delete
 
-In this sample we are going to ...
+In this sample we are going to create an app for delete files older than 7 days.
 
 ### 02 FS Truncate
 
