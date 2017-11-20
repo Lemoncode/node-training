@@ -141,7 +141,7 @@ In this sample we are going to play with `Writable` class from `stream` module.
 
 ### 04 Duplex
 
-In this sample we are going to ...
+In this sample we are going to play with `Duplex` class from `stream` module.
 
 ### 05 Transform
 
