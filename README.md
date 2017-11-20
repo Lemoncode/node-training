@@ -149,7 +149,7 @@ In this sample we are going to play with `Transform` class from `stream` module.
 
 ### 06 Zip
 
-In this sample we are going to ...
+In this sample we are going to use the `zlib` module to crompress a file and using `streams` and `pipes`.
 
 # About Lemoncode
 
