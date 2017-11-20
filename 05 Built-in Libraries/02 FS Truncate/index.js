@@ -1,52 +1,46 @@
 const fs = require('fs');
 const path = require('path');
-const dirname = path.join(__dirname, 'old');
-const { resolveFilePath, getFiles, getMillisecondsPerDay } = require('./helpers');
-const pathResolver = resolveFilePath(dirname);
+const dirname = path.join(__dirname, 'files');
+const { resolveFilePath, getFiles } = require('./helpers');
 
-const resolveMtime = (filePath) => {
+const resolveTruncateLength = (filePath) => {
   return new Promise((resolve, reject) => {
     fs.stat(filePath, (err, stats) => {
       if (err) {
         reject(err);
       }
-      resolve(stats.mtime);
+      resolve(stats.size / 2);
     });
   });
 };
 
-const hasToBeUnlink = (mtime) => {
-  const millisecondsPerWeek = 7 * getMillisecondsPerDay()
-  const olderThanAWeek = Date.now() - mtime.getTime() > millisecondsPerWeek;
-  return olderThanAWeek;
-};
-
-const resolveUnlink = (filePath) => {
+const truncateData = (length, filePath) => {
   return new Promise((resolve, reject) => {
-    fs.unlink(filePath, (err) => {
+    console.log(length);
+    fs.truncate(filePath, length, (err) => {
       if (err) {
         reject(err);
       }
-
-      resolve(filePath);
+      resolve('success');
     });
   });
 };
 
+const processSingleFile = (filepath) => {
+  resolveTruncateLength(filepath)
+    .then((length) => truncateData(length, filepath))
+    .catch(err => console.log(err));
+};
+
+const createProcessFiles = (files, pathResolver) => (processSingleFile) => {
+  files.forEach((filename) => {
+    const filepath = pathResolver(filename);
+    processSingleFile(filepath);
+  });
+};
+
+const pathResolver = resolveFilePath(dirname);
 const files = getFiles(dirname);
 
-files.forEach((file) => {
-  const filePath = pathResolver(file);
-  resolveMtime(filePath)
-    .then((result) => {
-      if (hasToBeUnlink(result)) {
-        return resolveUnlink(filePath);
-      }
-    })
-    .then((file) => {
-      if (file) {
-        console.log(`The file has been deleted ${file}`)
-      }
-    })
-    .catch((err) => console.log(err));
-});
+const processFiles = createProcessFiles(files, pathResolver);
+processFiles(processSingleFile);
