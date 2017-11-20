@@ -129,7 +129,7 @@ In this sample we are going to send an http `request` to understand a `readable 
 
 ### 01 Reading Big Files
 
-In this sample we are going to ...
+In this sample we are going to learn how to improve performance reading big files using `pipes`.
 
 ### 02 Readable Stream
 
