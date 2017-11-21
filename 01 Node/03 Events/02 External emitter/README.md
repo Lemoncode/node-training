@@ -27,13 +27,13 @@ Summary steps:
 ```diff
 const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (countries, emitter) => {
+const deferredProcess = (triesCount, emitter) => {
   process.nextTick(() => {
     let count = 0;
     emitter.emit('start');
     const interval = setInterval(() => {
       emitter.emit('data', ++count);
-      if (count === countries) {
+      if (count === triesCount) {
         emitter.emit('end', count);
         clearInterval(interval);
       }
@@ -41,10 +41,10 @@ const deferredProcess = (countries, emitter) => {
   });
 };
 
-- const dataRetriever = (countries) => {
-+ const retriever = (countries) => {
+- const dataRetriever = (triesCount) => {
++ const retriever = (triesCount) => {
   const emitter = new EventEmitter();
-  deferredProcess(countries, emitter);
+  deferredProcess(triesCount, emitter);
 
   return emitter;
 };
@@ -88,14 +88,14 @@ node index
 - const EventEmitter = require('events').EventEmitter;
 + const util = require('util');
 
-- const deferredProcess = (countries, emitter) => {
-+ const deferredProcess = (count, countries, emitter) => {
+- const deferredProcess = (triesCount, emitter) => {
++ const deferredProcess = (count, triesCount, emitter) => {
 -   process.nextTick(() => {
 -     let count = 0;
       emitter.emit('start');
       const interval = setInterval(() => {
         emitter.emit('data', ++count);
-        if (count === countries) {
+        if (count === triesCount) {
           emitter.emit('end', count);
           clearInterval(interval);
         }
@@ -103,14 +103,14 @@ node index
 -   });
 };
 
-- const retriever = (countries) => {
-+ const Retriever = function(countries) {
+- const retriever = (triesCount) => {
++ const Retriever = function(triesCount) {
 -   const emitter = new EventEmitter();
--   deferredProcess(countries, emitter);
+-   deferredProcess(triesCount, emitter);
 
 -   return emitter;
 +   const self = this;
-+   process.nextTick(() => deferredProcess(0, countries, self));
++   process.nextTick(() => deferredProcess(0, triesCount, self));
 };
 
 + util.inherits(
@@ -147,20 +147,20 @@ retrieverHandler.on('end', (data) => console.log(`End data: ${data}`));
 - const util = require('util');
 + const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (count, countries, emitter) => {
+const deferredProcess = (count, triesCount, emitter) => {
   emitter.emit('start');
   const interval = setInterval(() => {
     emitter.emit('data', ++count);
-    if (count === countries) {
+    if (count === triesCount) {
       emitter.emit('end', count);
       clearInterval(interval);
     }
   }, 300);
 };
 
-- const Retriever = function(countries) {
+- const Retriever = function(triesCount) {
 -   const self = this;
--   process.nextTick(() => deferredProcess(0, countries, self));
+-   process.nextTick(() => deferredProcess(0, triesCount, self));
 - };
 
 - util.inherits(
@@ -170,9 +170,9 @@ const deferredProcess = (count, countries, emitter) => {
 
 - module.exports = Retriever;
 + module.exports = class Retriever extends EventEmitter {
-+   constructor(countries) {
++   constructor(triesCount) {
 +     super();
-+     process.nextTick(() => deferredProcess(0, countries, this));
++     process.nextTick(() => deferredProcess(0, triesCount, this));
 +   }
 + };
 

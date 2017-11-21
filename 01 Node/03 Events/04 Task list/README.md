@@ -1,6 +1,41 @@
 # 04 Task list
 
-In this sample we are going to create a `client` and `server` to send commands.
+In this sample we are going to create two `EventEmitter`s instances splitted in two files and one unique `node process`. That is, each `EventEmitter` has its own file. So, we'll have the `client` and `server` files.
+
+We need a comunication between `client` and `server`. To simplify it, the `server` receives a `client` instance like:
+
+### ./client.js
+
+```javascript
+const client = new EventEmitter();
+const server = require('./server')(client);
+```
+
+### ./server.js
+
+```javascript
+class Server extends EventEmitter {
+  constructor(client) {
+  }
+  ...
+}
+...
+module.exports = (client) => new Server(client);
+```
+
+The aim of this sample is implement a `Task list` where the `server` are listening each `command` (event) `emitted` by client.
+The commands are:
+  - `add`: Add a task to the list.
+  - `delete`: Remove a task from the list.
+  - `ls`: Show all tasks in the list.
+  - `help`: Give info about commands.
+
+> NOTE: if `client` emits other commands different than previous one, it responses with `Unknown` message.
+
+The workflow could be:
+
+- The `client` emit `commands` that user writes in the terminal/console. `Server` is listening that `commands`.
+- The `server` emit a `response` for each command. `Client` is listening that `response`.
 
 Summary steps:
 
@@ -26,7 +61,6 @@ const readline = require('readline');
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 ```
@@ -42,7 +76,6 @@ const readline = require('readline');
 + const client = new EventEmitter();
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 ```
@@ -58,7 +91,6 @@ const readline = require('readline');
 const client = new EventEmitter();
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 + rl.on('line', (input) => {
@@ -80,7 +112,6 @@ const readline = require('readline');
 const client = new EventEmitter();
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 rl.on('line', (input) => {
@@ -157,7 +188,6 @@ const client = new EventEmitter();
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 rl.on('line', (input) => {
@@ -269,7 +299,6 @@ const server = require('./server')(client);
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
 });
 
 rl.on('line', (input) => {

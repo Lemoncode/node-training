@@ -57,9 +57,9 @@ nvm use 6.11.5
 ```diff
 const EventEmitter = require('events').EventEmitter;
 
-+ const dataRetriever = (countries) => {
++ const dataRetriever = (triesCount) => {
 +   const emitter = new EventEmitter();
-+   deferredProcess(countries, emitter);
++   deferredProcess(triesCount, emitter);
 
 +   return emitter;
 + };
@@ -73,13 +73,13 @@ const EventEmitter = require('events').EventEmitter;
 ```diff
 const EventEmitter = require('events').EventEmitter;
 
-+ const deferredProcess = (countries, emitter) => {
++ const deferredProcess = (triesCount, emitter) => {
 +   process.nextTick(() => {
 +     let count = 0;
 +     emitter.emit('start');
 +     const interval = setInterval(() => {
 +       emitter.emit('data', ++count);
-+       if (count === countries) {
++       if (count === triesCount) {
 +         emitter.emit('end', count);
 +         clearInterval(interval);
 +       }
@@ -87,29 +87,29 @@ const EventEmitter = require('events').EventEmitter;
 +   });
 + };
 
-const dataRetriever = (countries) => {
+const dataRetriever = (triesCount) => {
   const emitter = new EventEmitter();
-  deferredProcess(countries, emitter);
+  deferredProcess(triesCount, emitter);
 
   return emitter;
 };
 
 ```
 
-- For example, we are going to retrieve `10 countries`:
+- For example, we are going to retrieve `10 triesCount`:
 
 ### ./index.js
 
 ```diff
 const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (countries, emitter) => {
+const deferredProcess = (triesCount, emitter) => {
   process.nextTick(() => {
     let count = 0;
     emitter.emit('start');
     const interval = setInterval(() => {
       emitter.emit('data', ++count);
-      if (count === countries) {
+      if (count === triesCount) {
         emitter.emit('end', count);
         clearInterval(interval);
       }
@@ -117,9 +117,9 @@ const deferredProcess = (countries, emitter) => {
   });
 };
 
-const dataRetriever = (countries) => {
+const dataRetriever = (triesCount) => {
   const emitter = new EventEmitter();
-  deferredProcess(countries, emitter);
+  deferredProcess(triesCount, emitter);
 
   return emitter;
 };
@@ -140,7 +140,7 @@ const dataRetrieverHandler = dataRetriever(10);
 
 ```
 
-- While retrieving countries, we log:
+- While retrieving triesCount, we log:
 
 ### ./index.js
 
