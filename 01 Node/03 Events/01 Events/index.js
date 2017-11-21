@@ -1,12 +1,12 @@
 const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (countries, emitter) => {
+const deferredProcess = (triesCount, emitter) => {
   process.nextTick(() => {
     let count = 0;
     emitter.emit('start');
     const interval = setInterval(() => {
       emitter.emit('data', ++count);
-      if (count === countries) {
+      if (count === triesCount) {
         emitter.emit('end', count);
         clearInterval(interval);
       }
@@ -14,9 +14,9 @@ const deferredProcess = (countries, emitter) => {
   });
 };
 
-const dataRetriever = (countries) => {
+const dataRetriever = (triesCount) => {
   const emitter = new EventEmitter();
-  deferredProcess(countries, emitter);
+  deferredProcess(triesCount, emitter);
 
   return emitter;
 };

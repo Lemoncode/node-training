@@ -1,10 +1,10 @@
 const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (count, countries, emitter) => {
+const deferredProcess = (count, triesCount, emitter) => {
   emitter.emit('start');
   const interval = setInterval(() => {
     emitter.emit('data', ++count);
-    if (count === countries) {
+    if (count === triesCount) {
       emitter.emit('end', count);
       clearInterval(interval);
     }
@@ -12,8 +12,8 @@ const deferredProcess = (count, countries, emitter) => {
 };
 
 module.exports = class Retriever extends EventEmitter {
-  constructor(countries) {
+  constructor(triesCount) {
     super();
-    process.nextTick(() => deferredProcess(0, countries, this));
+    process.nextTick(() => deferredProcess(0, triesCount, this));
   }
 };
