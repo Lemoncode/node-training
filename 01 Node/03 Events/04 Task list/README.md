@@ -27,7 +27,7 @@ The aim of this sample is implement a `Task list` where the `server` are listeni
 The commands are:
   - `add`: Add a task to the list.
   - `delete`: Remove a task from the list.
-  - `ls`: Show all task in the list.
+  - `ls`: Show all tasks in the list.
   - `help`: Give info about commands.
 
 > NOTE: if `client` emits other commands different than previous one, it responses with `Unknown` message.
