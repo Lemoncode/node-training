@@ -123,15 +123,31 @@ In this sample we are going to implement `app` to watch files in specific folder
 
 ## 06 Streams
 
-### 00 Readable stream
+### 00 Intro Readable Stream
+
+In this sample we are going to send an http `request` to understand a `readable stream`.
+
+### 01 Reading Big Files
 
 In this sample we are going to ...
 
-### 01 Writable stream
+### 02 Readable Stream
 
 In this sample we are going to ...
 
-### 02 Pipe
+### 03 Writable Stream
+
+In this sample we are going to ...
+
+### 04 Duplex
+
+In this sample we are going to ...
+
+### 05 Transform
+
+In this sample we are going to ...
+
+### 06 Zip
 
 In this sample we are going to ...
 
