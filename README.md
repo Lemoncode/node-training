@@ -5,6 +5,8 @@ Each sample contains a `README.md` file that indicates the purpose of the sample
 
 # Samples
 
+# 01 Node
+
 ## 00 Intro
 
 ### 00 Installing Node and IDE
@@ -150,6 +152,14 @@ In this sample we are going to play with `Transform` class from `stream` module.
 ### 06 Zip
 
 In this sample we are going to use the `zlib` module to crompress a file and using `streams` and `pipes`.
+
+# 02 Mongo
+
+## 00 Intro
+
+### 00 Installing Mongo
+
+In this sample we are going to install and configure MongoDB.
 
 # About Lemoncode
 
