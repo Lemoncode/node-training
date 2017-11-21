@@ -159,7 +159,7 @@ In this sample we are going to use the `zlib` module to crompress a file and usi
 
 ### 00 Installing Mongo
 
-In this sample we are going to ...
+In this sample we are going to install and configure MongoDB.
 
 # About Lemoncode
 
