@@ -1,0 +1,27 @@
+{
+  "name": "mongo-samples",
+  "version": "1.0.0",
+  "description": "Samples to work with MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongodb",
+    "node",
+    "samples"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemoncode/node-training.git"
+  },
+  "author": "Lemoncode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lemoncode/node-training/issues"
+  },
+  "homepage": "https://github.com/Lemoncode/node-training#readme",
+  "dependencies": {
+    "mongodb": "^2.2.33"
+  }
+}
