@@ -85,38 +85,33 @@ node index
 ### ./retriever.js
 
 ```diff
-- const EventEmitter = require('events').EventEmitter;
+const EventEmitter = require('events').EventEmitter;
 + const util = require('util');
 
-- const deferredProcess = (triesCount, emitter) => {
-+ const deferredProcess = (count, triesCount, emitter) => {
--   process.nextTick(() => {
--     let count = 0;
-      emitter.emit('start');
-      const interval = setInterval(() => {
-        emitter.emit('data', ++count);
-        if (count === triesCount) {
-          emitter.emit('end', count);
-          clearInterval(interval);
-        }
-      }, 300);
--   });
+const deferredProcess = (triesCount, emitter) => {
+  process.nextTick(() => {
+    let count = 0;
+    emitter.emit('start');
+    const interval = setInterval(() => {
+      emitter.emit('data', ++count);
+      if (count === triesCount) {
+        emitter.emit('end', count);
+        clearInterval(interval);
+      }
+    }, 300);
+  });
 };
 
 - const retriever = (triesCount) => {
 + const Retriever = function(triesCount) {
 -   const emitter = new EventEmitter();
 -   deferredProcess(triesCount, emitter);
++   deferredProcess(triesCount, this);
 
 -   return emitter;
-+   const self = this;
-+   process.nextTick(() => deferredProcess(0, triesCount, self));
 };
 
-+ util.inherits(
-+   Retriever,
-+   require('events').EventEmitter
-+ );
++ util.inherits(Retriever, EventEmitter);
 
 - module.exports = retriever;
 + module.exports = Retriever;
@@ -144,35 +139,34 @@ retrieverHandler.on('end', (data) => console.log(`End data: ${data}`));
 ### ./retriever.js
 
 ```diff
+const EventEmitter = require('events').EventEmitter;
 - const util = require('util');
-+ const EventEmitter = require('events').EventEmitter;
 
-const deferredProcess = (count, triesCount, emitter) => {
-  emitter.emit('start');
-  const interval = setInterval(() => {
-    emitter.emit('data', ++count);
-    if (count === triesCount) {
-      emitter.emit('end', count);
-      clearInterval(interval);
-    }
-  }, 300);
+const deferredProcess = (triesCount, emitter) => {
+  process.nextTick(() => {
+    let count = 0;
+    emitter.emit('start');
+    const interval = setInterval(() => {
+      emitter.emit('data', ++count);
+      if (count === triesCount) {
+        emitter.emit('end', count);
+        clearInterval(interval);
+      }
+    }, 300);
+  });
 };
 
 - const Retriever = function(triesCount) {
--   const self = this;
--   process.nextTick(() => deferredProcess(0, triesCount, self));
+-   deferredProcess(triesCount, this);
 - };
 
-- util.inherits(
--   Retriever,
--   require('events').EventEmitter
-- );
+- util.inherits(Retriever, EventEmitter);
 
 - module.exports = Retriever;
 + module.exports = class Retriever extends EventEmitter {
 +   constructor(triesCount) {
 +     super();
-+     process.nextTick(() => deferredProcess(0, triesCount, this));
++     deferredProcess(triesCount, this));
 +   }
 + };
 

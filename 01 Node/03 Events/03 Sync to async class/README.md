@@ -175,7 +175,8 @@ const EventEmitter = require('events');
 +     console.time('Executed in');
 +     asyncFunc(...args, (err, data) => {
 +       if (err) {
-+         return this.emit('error', err);
++         this.emit('error', err);
++         return console.timeEnd('Executed in');
 +       }
 
 +       this.emit('data', data);
