@@ -84,7 +84,21 @@ const { MongoClient } = require('mongodb');
 
 ```
 
-- The most important
+- We can see which is the [`default MongoDB port`](https://docs.mongodb.com/manual/reference/default-mongodb-port/#default-mongodb-port). The `/test` param is the `database`. If it does not exists, mongo will create it for us. In this case, we are just connecting to the `test database` that mongo brings with it on its instalation:
+
+### ./index.js
+
+```diff
+const { MongoClient } = require('mongodb');
+
+const url = 'mongodb://localhost:27017/test';
+
++ MongoClient.connect(url, (error, db) => {
++   console.log('Success');
++   db.close();
++ });
+
+```
 
 - We could configure and execute [`npm scripts`](https://docs.npmjs.com/misc/scripts), for example `npm start` to run our app from console:
 
@@ -104,6 +118,18 @@ const { MongoClient } = require('mongodb');
 }
 
 ```
+
+- To run app we need two terminals now. Remember that we need to execute `mongod` first:
+
+```bash
+mongod
+```
+
+```bash
+npm start
+```
+
+![run app](../../99%20Resources/00%20Intro/01%20Connect%20MongoClient/run%20app.gif)
 
 # About Lemoncode
 
