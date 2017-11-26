@@ -198,7 +198,7 @@ In this sample we are going to install and configure MongoDB.
 
 ### 01 Connect MongoClient
 
-In this sample we are going to .
+In this sample we are going to install `mongodb` via `npm` and use it to create a connection with a database.
 
 ## 01 Create Database
 
