@@ -202,7 +202,7 @@ In this sample we are going to install `mongodb` via `npm` and use it to create 
 
 ## 01 Create Database
 
-In this sample we are going to .
+In this sample we are going to create a new `database` and `collection` and connect to it.
 
 ## 02 Insert
 
