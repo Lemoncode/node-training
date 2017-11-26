@@ -113,6 +113,8 @@ MongoClient.connect(url)
 
 ```
 
+> NOTE: The driver has also `insertMany`, that allows us to insert an array in collection.
+
 - To run app we need two terminals now. Remember that we need to execute `mongod` first:
 
 ```bash
@@ -123,8 +125,17 @@ mongod
 npm start
 ```
 
-![run app](../99%20Resources/01%20Create%20Database/run%20app.gif)
-s
+![run app](../99%20Resources/02%20Insert/run%20app.gif)
+
+> NOTE: We are using same db connection to insert that user. We could noticeable speed increase in we reuse the db object instead of open/close connections.
+
+> https://www.terlici.com/2015/04/03/mongodb-node-express.html
+
+> https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html
+
+> https://stackoverflow.com/questions/10656574/how-do-i-manage-mongodb-connections-in-a-node-js-web-application
+
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
