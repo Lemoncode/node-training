@@ -206,7 +206,7 @@ In this sample we are going to create a new `database` and `collection` and conn
 
 ## 02 Insert
 
-In this sample we are going to .
+In this sample we are going to insert new `user` in `users` collection.
 
 ## 03 Query Documents
 
