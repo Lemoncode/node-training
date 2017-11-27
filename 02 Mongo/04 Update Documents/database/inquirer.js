@@ -1,21 +1,36 @@
-module.exports = class Inquirer {
-  constructor(db, collection) {
-    if (!!db) {
-      this.db = db;
-    } else {
-      throw 'db not initialized';
-    }
+const inquirer = {
+  db: null,
+  collection: null,
+  isInitialized: false,
+};
 
-    if (!!collection) {
-      this.collection = collection;
-    } else {
-      throw 'collection not initialized';
-    }
+const initialize = (db, collection) => {
+  if (!!db) {
+    inquirer.db = db;
+  } else {
+    throw 'db not initialized';
   }
 
-  findWithLimit(query, limit = 1) {
-    return this.db.collection(this.collection)
+  if (!!collection) {
+    inquirer.collection = collection;
+  } else {
+    throw 'Collection not initialized';
+  }
+
+  inquirer.isInitialized = true;
+};
+
+const findWithLimit = (query, limit = 1) => {
+  if (inquirer.isInitialized) {
+    return inquirer.db.collection(inquirer.collection)
       .find(query)
       .limit(limit);
+  } else {
+    throw 'Not initialized';
   }
-}
+};
+
+module.exports = {
+  initialize,
+  findWithLimit
+};

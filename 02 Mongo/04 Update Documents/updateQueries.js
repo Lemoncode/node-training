@@ -1,9 +1,9 @@
-const db = require('./database/db');
-const { COLLECTION } = require('./database/settings');
-
-exports.updateOne = (findQuery, setQuery) => {
+exports.updateOne = (dbPromise, collection) => (findQuery, updateQuery) => {
   return new Promise((resolve, reject) => {
-    const result = db.get().collection(collection).updateOne(findQuery, setQuery);
-    resolve(result);
+    dbPromise.then((db) => {
+      const result = db.collection(collection).updateOne(findQuery, updateQuery);
+      resolve(result);
+    })
+    .catch((error) => reject(error));
   });
-}
+};

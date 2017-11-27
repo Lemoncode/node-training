@@ -38,27 +38,42 @@ module.exports = {
 ### ./database/inquirer.js
 
 ```javascript
-module.exports = class Inquirer {
-  constructor(db, collection) {
-    if (!!db) {
-      this.db = db;
-    } else {
-      throw 'db not initialized';
-    }
+const inquirer = {
+  db: null,
+  collection: null,
+  isInitialized: false,
+};
 
-    if (!!collection) {
-      this.collection = collection;
-    } else {
-      throw 'collection not initialized';
-    }
+const initialize = (db, collection) => {
+  if (!!db) {
+    inquirer.db = db;
+  } else {
+    throw 'db not initialized';
   }
 
-  findWithLimit(query, limit = 1) {
-    return this.db.collection(this.collection)
+  if (!!collection) {
+    inquirer.collection = collection;
+  } else {
+    throw 'Collection not initialized';
+  }
+
+  inquirer.isInitialized = true;
+};
+
+const findWithLimit = (query, limit = 1) => {
+  if (inquirer.isInitialized) {
+    return inquirer.db.collection(inquirer.collection)
       .find(query)
       .limit(limit);
+  } else {
+    throw 'Not initialized';
   }
-}
+};
+
+module.exports = {
+  initialize,
+  findWithLimit
+};
 
 ```
 
@@ -70,7 +85,7 @@ module.exports = class Inquirer {
 const db = require('./database/db');
 - const url = 'mongodb://localhost:27017/test';
 + const { URL, COLLECTION } = require('./database/settings');
-+ const Inquirer = require('./database/inquirer');
++ const inquirer = require('./database/inquirer');
 
 - const findBy = (query, limit = 1, explain = false) => {
 + const findBy = (query, limit = 1) => {
@@ -80,7 +95,7 @@ const db = require('./database/db');
 -     const cursor = db.collection('restaurants')
 -       .find(query)
 -       .limit(limit);
-+     const inquirer = new Inquirer(db, COLLECTION);
++     inquirer.initialize(db, COLLECTION);
 +     const cursor = inquirer.findWithLimit(query, limit);
 
 -     if (explain) {
@@ -133,13 +148,13 @@ exports.printFindResult = (cursor) => {
 ```diff
 const db = require('./database/db');
 const { URL, COLLECTION } = require('./database/settings');
-const Inquirer = require('./database/inquirer');
+const inquirer = require('./database/inquirer');
 + const { printFindResult } = require('./database/printer');
 
 const findBy = (query, limit = 1) => {
   db.connect(URL)
     .then((db) => {
-      const inquirer = new Inquirer(db, COLLECTION);
+      inquirer.initialize(db, COLLECTION);
       const cursor = inquirer.findWithLimit(query, limit);
 
 -     cursor.each((error, data) => {
@@ -167,6 +182,94 @@ findBy({ $or: [{ "cuisine": "Italian" }, { "address.zipcode": "10075" }] });
 ### ./updateQueries.js
 
 ```javascript
+exports.updateOne = (dbPromise, collection) => (findQuery, updateQuery) => {
+  return new Promise((resolve, reject) => {
+    dbPromise.then((db) => {
+      const result = db.collection(collection).updateOne(findQuery, updateQuery);
+      resolve(result);
+    })
+    .catch((error) => reject(error));
+  });
+};
+
+```
+
+- And implement `printUpdateResult` method:
+
+### ./database/printer.js
+
+```diff
+exports.printFindResult = (cursor) => {
+  cursor.each((error, data) => {
+    if (error) {
+      throw error;
+    }
+    console.dir(data);
+  });
+};
+
++ exports.printUpdateResult = (printCallback, findCallback) => (findQuery, limit, updateQuery, updater) => {
++   return updater(findQuery, updateQuery)
++     .then((result) => {
++       const cursor = findCallback(findQuery, limit);
++       printCallback(cursor);
++     });
++ };
+
+```
+
+- Use it in `index`:
+
+### ./index.js
+
+```diff
+const db = require('./database/db');
+const { URL, COLLECTION } = require('./database/settings');
+const inquirer = require('./database/inquirer');
+- const { printFindResult } = require('./database/printer');
++ const { printFindResult, printUpdateResult } = require('./database/printer');
++ const { updateOne } = require('./updateQueries');
+
+- const findBy = (query, limit = 1) => {
+-   db.connect(URL)
+-     .then((db) => {
+-       const inquirer = new Inquirer(db, COLLECTION);
+-       const cursor = inquirer.findWithLimit(query, limit);
+
+-       printFindResult(cursor);
+
+-       db.close();
+-     })
+-     .catch((error) => {
+-       console.error(error);
+-       db.close();
+-     });
+- };
+
+- findBy({ $or: [{ "cuisine": "Italian" }, { "address.zipcode": "10075" }] });
++ const dbPromise = db.connect(URL);
++ dbPromise.then((db) => {
++   inquirer.initialize(db, COLLECTION);
++ });
+
++ const updateBy = printUpdateResult(printFindResult, inquirer.findWithLimit);
+
++ updateBy(
++   { "name": "Juni" },
++   1,
++   {
++     $set: { "cuisine": "American (New)" },
++     $currentDate: { "lastModified": true },
++   },
++   updateOne(dbPromise, COLLECTION),
++ )
++   .then(() => {
++     db.close();
++   })
++   .catch((error) => {
++     console.log(error);
++     db.close();
++   });
 
 ```
 

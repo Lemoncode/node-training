@@ -1,23 +1,29 @@
 const db = require('./database/db');
 const { URL, COLLECTION } = require('./database/settings');
-const Inquirer = require('./database/inquirer');
-const { printFindResult } = require('./database/printer');
+const inquirer = require('./database/inquirer');
+const { printFindResult, printUpdateResult } = require('./database/printer');
 const { updateOne } = require('./updateQueries');
 
-const findBy = (query, limit = 1) => {
-  db.connect(URL)
-    .then((db) => {
-      const inquirer = new Inquirer(db, COLLECTION);
-      const cursor = inquirer.findWithLimit(query, limit);
+const dbPromise = db.connect(URL);
+dbPromise.then((db) => {
+  inquirer.initialize(db, COLLECTION);
+});
 
-      printFindResult(cursor);
+const updateBy = printUpdateResult(printFindResult, inquirer.findWithLimit);
 
-      db.close();
-    })
-    .catch((error) => {
-      console.error(error);
-      db.close();
-    });
-};
-
-findBy({ $or: [{ "cuisine": "Italian" }, { "address.zipcode": "10075" }] });
+updateBy(
+  { "name": "Juni" },
+  1,
+  {
+    $set: { "cuisine": "American (New)" },
+    $currentDate: { "lastModified": true },
+  },
+  updateOne(dbPromise, COLLECTION),
+)
+  .then(() => {
+    db.close();
+  })
+  .catch((error) => {
+    console.log(error);
+    db.close();
+  });
