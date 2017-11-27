@@ -1,10 +1,11 @@
 # 04 Update Documents
 
-In this sample we are going to
+In this sample we are going to implement some `database` business and create `queries` to `update` documents.
 
 Summary steps:
 
--
+- Create `settings` file.
+- Extract `query
 
 # Steps to build it
 
