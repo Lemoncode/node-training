@@ -2,7 +2,7 @@ const db = require('./database/db');
 const { URL, COLLECTION } = require('./database/settings');
 const inquirer = require('./database/inquirer');
 const { printFindResult, printUpdateResult } = require('./database/printer');
-const { updateOne } = require('./updateQueries');
+const { updateOne, updateMany } = require('./updateQueries');
 
 const dbPromise = db.connect(URL);
 dbPromise.then((db) => {
@@ -12,13 +12,13 @@ dbPromise.then((db) => {
 const updateBy = printUpdateResult(printFindResult, inquirer.findWithLimit);
 
 updateBy(
-  { "name": "Juni" },
-  1,
+  { "address.zipcode": "10016" },
+  2,
   {
-    $set: { "cuisine": "American (New)" },
+    $set: { cuisine: "Category To Be Determined" },
     $currentDate: { "lastModified": true },
   },
-  updateOne(dbPromise, COLLECTION),
+  updateMany(dbPromise, COLLECTION),
 )
   .then(() => {
     db.close();

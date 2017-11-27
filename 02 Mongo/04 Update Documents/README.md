@@ -273,6 +273,103 @@ const inquirer = require('./database/inquirer');
 
 ```
 
+![update one](../99%20Resources/04%20Update%20Documents/update%20one.gif)
+
+- We coul update nested properties using:
+
+### ./index.js
+
+```diff
+...
+
+updateBy(
+- { "name": "Juni" },
++ { "restaurant_id": "41156888" },
+  1,
+  {
+-   $set: { "cuisine": "American (New)" },
++   $set: { "address.street": "East 31st Street" },
+-   $currentDate: { "lastModified": true },
+  },
+  updateOne(dbPromise, COLLECTION),
+)
+...
+
+```
+
+![nested property](../99%20Resources/04%20Update%20Documents/nested%20property.gif)
+
+- Implement `updateOne` method:
+
+### ./updateQueries.js
+
+```diff
+exports.updateOne = (dbPromise, collection) => (findQuery, updateQuery) => {
+  return new Promise((resolve, reject) => {
+    dbPromise.then((db) => {
+      const result = db.collection(collection).updateOne(findQuery, updateQuery);
+      resolve(result);
+    })
+    .catch((error) => reject(error));
+  });
+};
+
++ exports.updateMany = (dbPromise, collection) => (findQuery, updateQuery) => {
++   return new Promise((resolve, reject) => {
++     dbPromise.then((db) => {
++       const result = db.collection(collection).updateMany(findQuery, updateQuery);
++       resolve(result);
++     })
++     .catch((error) => reject(error));
++   });
++ };
+
+```
+
+- Update `index`:
+
+### ./index.js
+
+```diff
+const db = require('./database/db');
+const { URL, COLLECTION } = require('./database/settings');
+const inquirer = require('./database/inquirer');
+const { printFindResult, printUpdateResult } = require('./database/printer');
+- const { updateOne } = require('./updateQueries');
++ const { updateOne, updateMany } = require('./updateQueries');
+
+const dbPromise = db.connect(URL);
+dbPromise.then((db) => {
+  inquirer.initialize(db, COLLECTION);
+});
+
+const updateBy = printUpdateResult(printFindResult, inquirer.findWithLimit);
+
+updateBy(
+- { "restaurant_id": "41156888" },
++ { "address.zipcode": "10016" },
+- 1,
++ 2,
+  {
+-   $set: { "address.street": "East 31st Street" },
++   $set: { cuisine: "Category To Be Determined" },
++   $currentDate: { "lastModified": true },
+  },
+- updateOne(dbPromise, COLLECTION),
++ updateMany(dbPromise, COLLECTION),
+)
+  .then(() => {
+    db.close();
+  })
+  .catch((error) => {
+    console.log(error);
+    db.close();
+  });
+
+```
+
+![update many](../99%20Resources/04%20Update%20Documents/update%20many.gif)
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
