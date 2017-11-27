@@ -196,6 +196,30 @@ In this sample we are going to use the `zlib` module to crompress a file and usi
 
 In this sample we are going to install and configure MongoDB.
 
+### 01 Connect MongoClient
+
+In this sample we are going to install `mongodb` via `npm` and use it to create a connection with a database.
+
+## 01 Create Database
+
+In this sample we are going to .
+
+## 02 Insert
+
+In this sample we are going to .
+
+## 03 Query Documents
+
+In this sample we are going to .
+
+## 04 Update Documents
+
+In this sample we are going to .
+
+## 05 Remove Documents
+
+In this sample we are going to .
+
 # About Lemoncode
 
 We are a team of long-term experienced freelance developers, established as a group in 2010.
