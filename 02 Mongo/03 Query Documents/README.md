@@ -164,12 +164,12 @@ npm start
 const db = require('./database/db');
 const url = 'mongodb://localhost:27017/test';
 
-+ const findBy = (find, limit = 1, explain = false) => {
++ const findBy = (query, limit = 1, explain = false) => {
     db.connect(url)
       .then((db) => {
         const cursor = db.collection('restaurants')
 -         .find()
-+         .find(find)
++         .find(query)
 -         .limit(50);
 +         .limit(limit);
 
