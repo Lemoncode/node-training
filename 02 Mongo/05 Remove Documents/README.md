@@ -1,6 +1,6 @@
 # 05 Remove Documents
 
-In this sample we are going to
+In this sample we are going to implement some `database` business and create `queries` to `remove` documents.
 
 Summary steps:
 
