@@ -1,27 +1,16 @@
 const db = require('./database/db');
-const url = 'mongodb://localhost:27017/test';
+const { URL, COLLECTION } = require('./database/settings');
+const Inquirer = require('./database/inquirer');
+const { printFindResult } = require('./database/printer');
+const { updateOne } = require('./updateQueries');
 
-const findBy = (find, limit = 1, explain = false) => {
-  db.connect(url)
+const findBy = (query, limit = 1) => {
+  db.connect(URL)
     .then((db) => {
-      const cursor = db.collection('restaurants')
-        .find(find)
-        .limit(limit);
+      const inquirer = new Inquirer(db, COLLECTION);
+      const cursor = inquirer.findWithLimit(query, limit);
 
-      if (explain) {
-        cursor.explain()
-          .then((data) => {
-            console.log(data);
-            db.close();
-          });
-      }
-
-      cursor.each((error, data) => {
-        if (error) {
-          throw error;
-        }
-        console.dir(data);
-      });
+      printFindResult(cursor);
 
       db.close();
     })
