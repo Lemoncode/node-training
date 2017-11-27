@@ -1,34 +1,29 @@
 const db = require('./database/db');
-const url = 'mongodb://localhost:27017/test';
+const { URL, COLLECTION } = require('./database/settings');
+const inquirer = require('./database/inquirer');
+const { printFindResult, printUpdateResult } = require('./database/printer');
+const { updateOne, updateMany } = require('./updateQueries');
 
-const findBy = (find, limit = 1, explain = false) => {
-  db.connect(url)
-    .then((db) => {
-      const cursor = db.collection('restaurants')
-        .find(find)
-        .limit(limit);
+const dbPromise = db.connect(URL);
+dbPromise.then((db) => {
+  inquirer.initialize(db, COLLECTION);
+});
 
-      if (explain) {
-        cursor.explain()
-          .then((data) => {
-            console.log(data);
-            db.close();
-          });
-      }
+const updateBy = printUpdateResult(printFindResult, inquirer.findWithLimit);
 
-      cursor.each((error, data) => {
-        if (error) {
-          throw error;
-        }
-        console.dir(data);
-      });
-
-      db.close();
-    })
-    .catch((error) => {
-      console.error(error);
-      db.close();
-    });
-};
-
-findBy({ $or: [{ "cuisine": "Italian" }, { "address.zipcode": "10075" }] });
+updateBy(
+  { "address.zipcode": "10016" },
+  2,
+  {
+    $set: { cuisine: "Category To Be Determined" },
+    $currentDate: { "lastModified": true },
+  },
+  updateMany(dbPromise, COLLECTION),
+)
+  .then(() => {
+    db.close();
+  })
+  .catch((error) => {
+    console.log(error);
+    db.close();
+  });
