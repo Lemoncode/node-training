@@ -214,7 +214,7 @@ In this sample we are going to reuse the `db` object and create `queries` to `fi
 
 ## 04 Update Documents
 
-In this sample we are going to .
+In this sample we are going to implement some `database` business and create `queries` to `update` documents.
 
 ## 05 Remove Documents
 
