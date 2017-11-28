@@ -14,3 +14,10 @@ exports.printUpdateResult = (printCallback, findCallback) => (findQuery, limit, 
       printCallback(cursor);
     });
 };
+
+exports.printDeleteResult = (findQuery, deleteBy) => {
+  return deleteBy(findQuery)
+    .then((result) => {
+      console.log(result);
+    });
+};
