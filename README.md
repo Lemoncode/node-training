@@ -210,7 +210,7 @@ In this sample we are going to insert new `user` in `users` collection.
 
 ## 03 Query Documents
 
-In this sample we are going to .
+In this sample we are going to reuse the `db` object and create `queries` to `find` documents.
 
 ## 04 Update Documents
 

@@ -1,35 +1,34 @@
-const { MongoClient } = require('mongodb');
+const db = require('./database/db');
+const url = 'mongodb://localhost:27017/test';
 
-const url = 'mongodb://localhost:27017/chat';
+const findBy = (query, limit = 1, explain = false) => {
+  db.connect(url)
+    .then((db) => {
+      const cursor = db.collection('restaurants')
+        .find(query)
+        .limit(limit);
 
-const createUser = () => ({
-  login: 'jaisal',
-  privilege: 'standard',
-  comments: [
-    {
-      date: new Date('2017-11-28T00:00:00Z'),
-      text: 'I have something to do',
-    },
-    {
-      date: new Date('2017-11-29T00:00:00Z'),
-      text: 'I still not remind what to do...',
-    },
-  ],
-});
+      if (explain) {
+        cursor.explain()
+          .then((data) => {
+            console.log(data);
+            db.close();
+          });
+      }
 
-const insertUser = (db, user) => (
-  db.collection('users')
-    .insertOne(user)
-    .then(() => {
-      console.log(`User ${user.login} inserted!`);
+      cursor.each((error, data) => {
+        if (error) {
+          throw error;
+        }
+        console.dir(data);
+      });
+
       db.close();
     })
-    .catch((error) => { throw error })
-);
+    .catch((error) => {
+      console.error(error);
+      db.close();
+    });
+};
 
-MongoClient.connect(url)
-  .then((db) => {
-    const user = createUser();
-    return insertUser(db, user);
-  })
-  .catch((error) => console.log(error));
+findBy({ $or: [{ "cuisine": "Italian" }, { "address.zipcode": "10075" }] });
