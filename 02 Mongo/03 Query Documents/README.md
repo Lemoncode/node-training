@@ -37,13 +37,11 @@ exports.connect = (url) => {
     MongoClient.connect(url)
       .then((db) => {
         state.db = db;
-        resolve(get());
+        resolve(state.db);
       })
       .catch((error) => reject(error));
   });
 };
-
-const get = exports.get = () => state.db;
 
 exports.close = (done = () => { }) => {
   if (state.db) {
