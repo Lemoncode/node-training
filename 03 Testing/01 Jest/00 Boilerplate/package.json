@@ -1,0 +1,47 @@
+{
+  "name": "testing-with-jest",
+  "version": "1.0.0",
+  "description": "Testing a Node + Express project with Jest",
+  "main": "index.js",
+  "scripts": {
+    "start": "env-cmd .env npm run start:env",
+    "start:env": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "npm run build && gulp dev --gulpfile config/gulp/dev.js",
+    "start:prod": "node public/app.js",
+    "build": "gulp build --gulpfile config/gulp/base.js"
+  },
+  "keywords": [
+    "testing",
+    "node",
+    "express",
+    "samples"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lemoncode/node-training.git"
+  },
+  "author": "Lemoncode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lemoncode/node-training/issues"
+  },
+  "homepage": "https://github.com/Lemoncode/node-training#readme",
+  "devDependencies": {
+    "@types/body-parser": "^1.16.8",
+    "@types/express": "^4.11.0",
+    "env-cmd": "^7.0.0",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sourcemaps": "^1.12.1",
+    "gulp-tslint": "^8.1.2",
+    "gulp-typescript": "^3.2.4",
+    "if-env": "^1.0.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.9.1",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
+  }
+}
